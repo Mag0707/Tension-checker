@@ -753,6 +753,26 @@
     return audioContext;
   }
 
+  function unlockAudioContext() {
+    const context = getAudioContext();
+
+    if (context.state === "suspended") {
+      context.resume().catch(() => {
+        // 再生可能なタイミングで改めて再開します。
+      });
+    }
+
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    const now = context.currentTime;
+
+    gain.gain.setValueAtTime(0.00001, now);
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start(now);
+    oscillator.stop(now + 0.03);
+  }
+
   function registerAudioNode(node) {
     activeAudioNodes.push(node);
     return node;
@@ -815,6 +835,14 @@
   }
 
   function playAlertSound(type) {
+    const context = getAudioContext();
+
+    if (context.state === "suspended") {
+      context.resume().catch(() => {
+        // iOSで一時停止された場合に備え、ユーザー操作時の解除も併用します。
+      });
+    }
+
     stopAllAudio();
 
     if (type === "bell") {
@@ -1029,6 +1057,7 @@
   }
 
   function previewAlert() {
+    unlockAudioContext();
     stopPreviewTimer();
     playAlertSound(alertSoundSelect.value);
 
@@ -1492,6 +1521,7 @@
   }
 
   function startTimer() {
+    unlockAudioContext();
     stopPreviewTimer();
     stopAllAudio();
     saveSettings();
@@ -1532,6 +1562,8 @@
   }
 
   function resumeTimer() {
+    unlockAudioContext();
+
     if (!isPaused) {
       return;
     }

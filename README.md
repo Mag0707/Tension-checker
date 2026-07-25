@@ -136,3 +136,9 @@ The five-minute break countdown continues while the body-check question is displ
 | `language` | Display language at the time of the response: `ja` or `en`. |
 
 CSV is suited to aggregation and analysis in spreadsheets or ChatGPT. JSON is suited to complete structured backups.
+
+### iPhoneでのアラート音
+集中中の環境音がMP3の場合でも、タイマー開始時のユーザー操作でWeb Audioをあらかじめ有効化します。これにより、集中終了時に操作なしで鳴るアラート音がiPhoneで無音になる問題を防ぎます。
+
+### Alert Sound on iPhone
+Even when the focus ambience uses an MP3 file, Web Audio is unlocked during the user's Start action. This prevents the focus-end alert from becoming silent on iPhone when it needs to play later without another user gesture.
