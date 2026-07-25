@@ -165,3 +165,24 @@ Focus-end and break-end alerts use short MP3 files bundled with the app instead 
 - `sounds/digital-tone.mp3`
 
 Both previews and timer-end alerts use the same HTMLAudioElement playback method. This avoids silent alerts caused by a suspended Web Audio context on iPhone.
+
+
+## iPhone向けアラート再生の保持方式
+
+第38版では、アラート音をタイマー終了時に新しく作成しません。スタート操作時に選択中のMP3を同じ `HTMLAudioElement` で短く事前再生し、その要素を保持したまま集中終了時に再利用します。
+
+- スタート時に選択中のアラート音を極小音量で約0.08秒だけ事前再生
+- 事前再生後は停止して先頭へ戻す
+- 集中終了時は新しいAudio要素を作らず、保持済みの同じ要素を再生
+- アラート音の選択を変更した場合も、そのユーザー操作内で新しい選択音を準備
+
+---
+
+## Persistent Alert Playback for iPhone
+
+Version 38 does not create a new audio element when the timer ends. During the Start action, the selected MP3 is briefly primed using the same `HTMLAudioElement`, which is retained and reused for the focus-end alert.
+
+- The selected alert is primed at extremely low volume for about 0.08 seconds
+- It is then paused and reset to the beginning
+- The focus-end alert reuses the same retained audio element
+- Changing the selected alert also primes the new selection within that user action

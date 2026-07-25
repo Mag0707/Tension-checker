@@ -281,6 +281,7 @@
   let audioContext = null;
   let focusAudio = null;
   let alertAudio = null;
+  const alertAudioPool = new Map();
   let activeAudioNodes = [];
   let focusTickIntervalId = null;
   let wakeLock = null;
@@ -754,17 +755,40 @@
     return audioContext;
   }
 
-  function primeAlertAudioFiles() {
-    const paths = [
-      "sounds/soft-chime.mp3",
-      "sounds/bell.mp3",
-      "sounds/digital-tone.mp3"
-    ];
+  function getOrCreateAlertAudio(type) {
+    const path = getAlertSoundPath(type);
 
-    for (const path of paths) {
+    if (!alertAudioPool.has(path)) {
       const audio = new Audio(path);
       audio.preload = "auto";
-      audio.load();
+      audio.volume = 0.9;
+      alertAudioPool.set(path, audio);
+    }
+
+    return alertAudioPool.get(path);
+  }
+
+  async function primeSelectedAlertAudio() {
+    const audio = getOrCreateAlertAudio(alertSoundSelect.value);
+
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.muted = false;
+      audio.volume = 0.001;
+
+      await audio.play();
+      await new Promise(resolve => window.setTimeout(resolve, 80));
+
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = 0.9;
+      alertAudio = audio;
+    } catch (_) {
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = 0.9;
+      alertAudio = audio;
     }
   }
 
@@ -803,7 +827,6 @@
     if (alertAudio) {
       alertAudio.pause();
       alertAudio.currentTime = 0;
-      alertAudio = null;
     }
 
     if (focusTickIntervalId !== null) {
@@ -868,26 +891,26 @@
   }
 
   function playAlertSound(type) {
-    if (alertAudio) {
+    const audio = getOrCreateAlertAudio(type);
+
+    if (alertAudio && alertAudio !== audio) {
       alertAudio.pause();
       alertAudio.currentTime = 0;
     }
 
-    alertAudio = new Audio(getAlertSoundPath(type));
-    alertAudio.preload = "auto";
+    alertAudio = audio;
+    alertAudio.pause();
+    alertAudio.currentTime = 0;
+    alertAudio.muted = false;
     alertAudio.volume = 0.9;
 
     const playPromise = alertAudio.play();
 
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {
-        alertAudio = null;
+        // iOSが再生を拒否した場合でも、保持した同じAudio要素は次回再利用します。
       });
     }
-
-    alertAudio.addEventListener("ended", () => {
-      alertAudio = null;
-    }, { once: true });
   }
 
   function createNoiseBuffer(seconds = 2) {
@@ -1083,7 +1106,6 @@
   }
 
   function previewAlert() {
-    primeAlertAudioFiles();
     unlockAudioContext();
     stopPreviewTimer();
     playAlertSound(alertSoundSelect.value);
@@ -1547,8 +1569,8 @@
     }, ALERT_DURATION_MS);
   }
 
-  function startTimer() {
-    primeAlertAudioFiles();
+  async function startTimer() {
+    await primeSelectedAlertAudio();
     unlockAudioContext();
     stopPreviewTimer();
     stopAllAudio();
@@ -1589,8 +1611,8 @@
     saveTimerState();
   }
 
-  function resumeTimer() {
-    primeAlertAudioFiles();
+  async function resumeTimer() {
+    await primeSelectedAlertAudio();
     unlockAudioContext();
 
     if (!isPaused) {
@@ -1656,7 +1678,10 @@
     saveSettings();
   });
 
-  alertSoundSelect.addEventListener("change", saveSettings);
+  alertSoundSelect.addEventListener("change", async () => {
+    saveSettings();
+    await primeSelectedAlertAudio();
+  });
   focusSoundSelect.addEventListener("change", () => {
     stopPreviewTimer();
     stopAllAudio();
