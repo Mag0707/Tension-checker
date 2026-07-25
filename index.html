@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <title>過緊張チェックタイマー</title>
-  <link rel="stylesheet" href="style.css?v=34">
+  <link rel="stylesheet" href="style.css?v=35">
 </head>
 <body>
   <main class="app-shell">
@@ -231,6 +231,10 @@
     <section id="body-check-dialog" class="body-check-dialog" role="dialog" aria-modal="true" aria-labelledby="body-check-title">
       <p class="sheet-eyebrow" data-i18n="bodyCheckEyebrow">BODY CHECK</p>
       <h2 id="body-check-title" data-i18n="bodyCheckTitle">身体をひとつ確認しましょう</h2>
+      <div class="body-check-break-status">
+        <span data-i18n="breakRemaining">休憩の残り時間</span>
+        <strong id="body-check-break-time">05:00</strong>
+      </div>
       <p id="body-check-instruction" class="body-check-instruction"></p>
       <p id="body-check-question" class="body-check-question"></p>
       <div id="body-check-answers" class="body-check-answers"></div>
@@ -238,6 +242,6 @@
     </section>
   </div>
 
-  <script src="app.js?v=34"></script>
+  <script src="app.js?v=35"></script>
 </body>
 </html>

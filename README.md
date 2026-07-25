@@ -82,7 +82,7 @@ sounds/
 「今回は記録しない」を選んだ場合は、回答データは保存されません。設定画面の「記録を削除」では、確認メッセージの後に端末内の全履歴を削除します。
 
 ### 休憩中の回答動作
-身体チェックの質問が表示されている間も、5分間の休憩カウントは進みます。休憩時間内に回答されなかった場合は、自動的に「今回は記録しない」として扱い、回答データを保存せず次の集中時間へ移ります。
+身体チェックの質問が表示されている間も、5分間の休憩カウントは進みます。質問画面には休憩の残り時間も表示されます。休憩時間内に回答されなかった場合は、質問を自動的に閉じ、`answerId` を `no_response`、回答を「回答なし（休憩時間内に未回答）」として保存してから次の集中時間へ移ります。
 
 ### エクスポート項目
 
@@ -93,8 +93,8 @@ sounds/
 | `questionId` | 質問を識別する固定IDです。表示文を変更しても同じ質問として集計できます。 |
 | `question` | 回答時に画面へ表示された質問文です。 |
 | `bodyArea` | 確認した身体部位・カテゴリーです。例：`shoulders`、`jaw`、`breathing`。 |
-| `answerId` | 回答を識別する固定IDです。言語に依存せず集計できます。 |
-| `answer` | 回答時に画面へ表示された回答文です。 |
+| `answerId` | 回答を識別する固定IDです。言語に依存せず集計できます。休憩終了まで未回答の場合は `no_response` です。 |
+| `answer` | 回答時に画面へ表示された回答文です。休憩終了まで未回答の場合は「回答なし（休憩時間内に未回答）」です。 |
 | `soundId` | 回答前の集中時間に使用していたサウンドの固定IDです。 |
 | `sound` | 回答前の集中時間に使用していたサウンドの表示名です。 |
 | `focusDurationMinutes` | 設定されていた集中時間です。単位は分です。 |
@@ -114,7 +114,7 @@ After each focus session, one randomly selected question asks about a specific p
 Selecting “Do not record this time” does not save a response. The “Delete Records” button removes all locally stored history after a confirmation message.
 
 ### Answering During the Break
-The five-minute break countdown continues while the body-check question is displayed. If no answer is selected before the break ends, the app automatically treats it as “Do not record this time,” saves no response data, and moves to the next focus session.
+The five-minute break countdown continues while the body-check question is displayed, and the remaining break time is shown in the dialog. If no answer is selected before the break ends, the dialog closes automatically and a record is saved with `answerId` set to `no_response` and the answer text set to “No response before the break ended” before the next focus session begins.
 
 ### Export Fields
 
@@ -125,8 +125,8 @@ The five-minute break countdown continues while the body-check question is displ
 | `questionId` | Stable ID identifying the question, allowing aggregation even if its displayed wording changes. |
 | `question` | Question text displayed when the answer was recorded. |
 | `bodyArea` | Body area or category checked, such as `shoulders`, `jaw`, or `breathing`. |
-| `answerId` | Stable ID identifying the answer independently of display language. |
-| `answer` | Answer text displayed when the response was recorded. |
+| `answerId` | Stable ID identifying the answer independently of display language. It is `no_response` when the break ends without an answer. |
+| `answer` | Answer text displayed when the response was recorded. When unanswered at break end, it is “No response before the break ended.” |
 | `soundId` | Stable ID of the focus sound used before the answer. |
 | `sound` | Display name of the focus sound used before the answer. |
 | `focusDurationMinutes` | Configured focus duration in minutes. |

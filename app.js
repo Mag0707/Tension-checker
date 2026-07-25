@@ -74,6 +74,8 @@
       deleteComplete: "身体チェックの記録を削除しました。",
       bodyCheckEyebrow: "BODY CHECK",
       bodyCheckTitle: "身体をひとつ確認しましょう",
+      breakRemaining: "休憩の残り時間",
+      answerNoResponse: "回答なし（休憩時間内に未回答）",
       skipThisTime: "今回は記録しない",
       answerBetter: "少し楽になった",
       answerNoChange: "変わらなかった",
@@ -168,6 +170,8 @@
       deleteComplete: "Body-check records were deleted.",
       bodyCheckEyebrow: "BODY CHECK",
       bodyCheckTitle: "Check one area of your body",
+      breakRemaining: "Break time remaining",
+      answerNoResponse: "No response before the break ended",
       skipThisTime: "Do not record this time",
       answerBetter: "It feels a little easier",
       answerNoChange: "No change",
@@ -231,6 +235,7 @@
   const bodyCheckOverlay = document.getElementById("body-check-overlay");
   const bodyCheckDialog = document.getElementById("body-check-dialog");
   const bodyCheckInstruction = document.getElementById("body-check-instruction");
+  const bodyCheckBreakTime = document.getElementById("body-check-break-time");
   const bodyCheckQuestion = document.getElementById("body-check-question");
   const bodyCheckAnswers = document.getElementById("body-check-answers");
   const bodyCheckSkip = document.getElementById("body-check-skip");
@@ -415,6 +420,34 @@
     return labels[soundId]?.[language] ?? soundId;
   }
 
+  function recordUnansweredBodyCheck() {
+    if (!pendingBodyCheck) {
+      return;
+    }
+
+    const localizedQuestion = pendingBodyCheck[selectedLanguage];
+    const record = {
+      recordVersion: 1,
+      answeredAt: toLocalIsoString(),
+      questionId: pendingBodyCheck.id,
+      question: localizedQuestion.question,
+      bodyArea: pendingBodyCheck.bodyArea,
+      answerId: "no_response",
+      answer: t("answerNoResponse"),
+      soundId: focusSoundSelect.value,
+      sound: getFocusSoundLabel(focusSoundSelect.value),
+      focusDurationMinutes: Math.round(focusSeconds / 60),
+      actualFocusSeconds: focusSeconds,
+      cycleNumber: cycle,
+      checkTiming: "focus_end",
+      language: selectedLanguage
+    };
+
+    const records = getBodyCheckHistory();
+    records.push(record);
+    saveBodyCheckHistory(records);
+  }
+
   function closeBodyCheck() {
     bodyCheckOverlay.classList.add("hidden");
     bodyCheckOverlay.setAttribute("aria-hidden", "true");
@@ -459,6 +492,7 @@
     const localizedQuestion = pendingBodyCheck[selectedLanguage];
     bodyCheckInstruction.textContent = localizedQuestion.instruction;
     bodyCheckQuestion.textContent = localizedQuestion.question;
+    bodyCheckBreakTime.textContent = formatTime(remainingSeconds);
     bodyCheckAnswers.innerHTML = "";
 
     for (const answer of BODY_CHECK_ANSWERS) {
@@ -1300,6 +1334,13 @@
     timeDisplay.textContent = formatTime(remainingSeconds);
     cycleDisplay.textContent = t("cycle")(cycle);
 
+    if (
+      phase === "break" &&
+      !bodyCheckOverlay.classList.contains("hidden")
+    ) {
+      bodyCheckBreakTime.textContent = formatTime(remainingSeconds);
+    }
+
     const messages = phase === "focus" ? t("focusMessages") : t("breakMessages");
     checkMessage.textContent = messages[messageIndex % messages.length];
   }
@@ -1404,6 +1445,7 @@
     }
 
     if (!bodyCheckOverlay.classList.contains("hidden")) {
+      recordUnansweredBodyCheck();
       closeBodyCheck();
     }
 
