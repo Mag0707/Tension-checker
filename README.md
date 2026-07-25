@@ -142,3 +142,26 @@ CSV is suited to aggregation and analysis in spreadsheets or ChatGPT. JSON is su
 
 ### Alert Sound on iPhone
 Even when the focus ambience uses an MP3 file, Web Audio is unlocked during the user's Start action. This prevents the focus-end alert from becoming silent on iPhone when it needs to play later without another user gesture.
+
+
+## アラート音の再生方式
+
+集中終了・休憩終了のアラート音は、Web Audioによるリアルタイム合成ではなく、アプリに同梱した短いMP3ファイルを使用します。
+
+- `sounds/soft-chime.mp3`
+- `sounds/bell.mp3`
+- `sounds/digital-tone.mp3`
+
+試聴とタイマー終了時のどちらも、同じHTMLAudioElement方式で再生します。これにより、iPhoneでWeb Audioが停止状態になってアラートが無音になる問題を避けます。
+
+---
+
+## Alert Sound Playback
+
+Focus-end and break-end alerts use short MP3 files bundled with the app instead of real-time Web Audio synthesis.
+
+- `sounds/soft-chime.mp3`
+- `sounds/bell.mp3`
+- `sounds/digital-tone.mp3`
+
+Both previews and timer-end alerts use the same HTMLAudioElement playback method. This avoids silent alerts caused by a suspended Web Audio context on iPhone.

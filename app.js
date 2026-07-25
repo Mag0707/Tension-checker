@@ -280,6 +280,7 @@
 
   let audioContext = null;
   let focusAudio = null;
+  let alertAudio = null;
   let activeAudioNodes = [];
   let focusTickIntervalId = null;
   let wakeLock = null;
@@ -753,6 +754,20 @@
     return audioContext;
   }
 
+  function primeAlertAudioFiles() {
+    const paths = [
+      "sounds/soft-chime.mp3",
+      "sounds/bell.mp3",
+      "sounds/digital-tone.mp3"
+    ];
+
+    for (const path of paths) {
+      const audio = new Audio(path);
+      audio.preload = "auto";
+      audio.load();
+    }
+  }
+
   function unlockAudioContext() {
     const context = getAudioContext();
 
@@ -783,6 +798,12 @@
       focusAudio.pause();
       focusAudio.currentTime = 0;
       focusAudio = null;
+    }
+
+    if (alertAudio) {
+      alertAudio.pause();
+      alertAudio.currentTime = 0;
+      alertAudio = null;
     }
 
     if (focusTickIntervalId !== null) {
@@ -834,34 +855,39 @@
     oscillator.stop(now + durationSeconds);
   }
 
-  function playAlertSound(type) {
-    const context = getAudioContext();
-
-    if (context.state === "suspended") {
-      context.resume().catch(() => {
-        // iOSで一時停止された場合に備え、ユーザー操作時の解除も併用します。
-      });
-    }
-
-    stopAllAudio();
-
+  function getAlertSoundPath(type) {
     if (type === "bell") {
-      playTone(784, 0.45, { type: "sine", volume: 0.18, release: 0.3 });
-      window.setTimeout(() => playTone(659, 0.45, { type: "sine", volume: 0.16, release: 0.3 }), 520);
-      window.setTimeout(() => playTone(784, 0.55, { type: "sine", volume: 0.18, release: 0.35 }), 1050);
-      return;
+      return "sounds/bell.mp3";
     }
 
     if (type === "digital") {
-      playTone(880, 0.18, { type: "square", volume: 0.07, release: 0.04 });
-      window.setTimeout(() => playTone(880, 0.18, { type: "square", volume: 0.07, release: 0.04 }), 330);
-      window.setTimeout(() => playTone(1047, 0.35, { type: "square", volume: 0.06, release: 0.08 }), 680);
-      return;
+      return "sounds/digital-tone.mp3";
     }
 
-    playTone(523, 0.55, { type: "sine", volume: 0.12, release: 0.35 });
-    window.setTimeout(() => playTone(659, 0.65, { type: "sine", volume: 0.11, release: 0.4 }), 350);
-    window.setTimeout(() => playTone(784, 0.75, { type: "sine", volume: 0.09, release: 0.5 }), 700);
+    return "sounds/soft-chime.mp3";
+  }
+
+  function playAlertSound(type) {
+    if (alertAudio) {
+      alertAudio.pause();
+      alertAudio.currentTime = 0;
+    }
+
+    alertAudio = new Audio(getAlertSoundPath(type));
+    alertAudio.preload = "auto";
+    alertAudio.volume = 0.9;
+
+    const playPromise = alertAudio.play();
+
+    if (playPromise && typeof playPromise.catch === "function") {
+      playPromise.catch(() => {
+        alertAudio = null;
+      });
+    }
+
+    alertAudio.addEventListener("ended", () => {
+      alertAudio = null;
+    }, { once: true });
   }
 
   function createNoiseBuffer(seconds = 2) {
@@ -1057,6 +1083,7 @@
   }
 
   function previewAlert() {
+    primeAlertAudioFiles();
     unlockAudioContext();
     stopPreviewTimer();
     playAlertSound(alertSoundSelect.value);
@@ -1521,6 +1548,7 @@
   }
 
   function startTimer() {
+    primeAlertAudioFiles();
     unlockAudioContext();
     stopPreviewTimer();
     stopAllAudio();
@@ -1562,6 +1590,7 @@
   }
 
   function resumeTimer() {
+    primeAlertAudioFiles();
     unlockAudioContext();
 
     if (!isPaused) {

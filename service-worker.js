@@ -1,4 +1,4 @@
-const CACHE_NAME = "tension-check-timer-v36";
+const CACHE_NAME = "tension-check-timer-v37";
 
 const APP_FILES = [
   "./",
@@ -9,7 +9,10 @@ const APP_FILES = [
   "./icons/icon-192.png",
   "./icons/icon-512.png",
   "./sounds/dragon-studio-gentle-midday-rain-499668.mp3",
-  "./sounds/pwlpl-busy-coffee-shop-ambiance-with-crowd-chatter-481151.mp3"
+  "./sounds/pwlpl-busy-coffee-shop-ambiance-with-crowd-chatter-481151.mp3",
+  "./sounds/digital-tone.mp3",
+  "./sounds/bell.mp3",
+  "./sounds/soft-chime.mp3"
 ];
 
 self.addEventListener("install", event => {
