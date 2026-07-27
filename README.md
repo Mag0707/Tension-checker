@@ -213,3 +213,30 @@ Version 39 keeps the same focus-BGM `HTMLAudioElement` alive for the entire time
 - Reset fully stops, rewinds, and discards the retained BGM element
 
 This avoids iPhone rejecting a new automatic audio playback request when the second and later focus cycles begin.
+
+
+## 第40版：休憩中のBGM停止方式
+
+第39版では、休憩中もBGMを再生したまま `volume = 0` にしていましたが、iPhone実機で休憩中も音が聞こえ続ける事象が確認されたため、第40版では方式を変更しました。
+
+- 集中終了時：BGMを `pause()` して確実に停止
+- 休憩中：同じBGM用 `HTMLAudioElement` を保持したまま停止状態を維持
+- 休憩中に一時停止・再開しても、BGMは停止したまま
+- 次の集中開始時：新しいAudio要素は作らず、保持している同じ要素を `play()` して再開
+- リセット時のみ、停止・先頭へ戻す・Audio要素を破棄
+
+この版では「音量0で無音化」ではなく「休憩中は実際にpauseする」ことで、休憩中にBGMが聞こえ続ける問題を防ぎます。
+
+---
+
+## Version 40: BGM Handling During Breaks
+
+Version 39 kept the focus BGM playing at `volume = 0` during breaks. Because the BGM could still be heard on iPhone, version 40 changes the behavior.
+
+- At focus end: pause the BGM completely
+- During breaks: keep the same retained `HTMLAudioElement`, but leave it paused
+- Pausing and resuming the timer during a break does not restart the BGM
+- At the next focus start: reuse the same retained audio element and call `play()`
+- Only Reset rewinds and discards the retained BGM element
+
+This replaces the volume-zero approach with a true pause during breaks.

@@ -1101,7 +1101,7 @@
 
   function playFocusAudioFile(sourcePath, type) {
     if (focusAudio && focusAudioType === type) {
-      setFocusAudioAudible(true);
+      focusAudio.volume = focusAudioTargetVolume;
 
       if (focusAudio.paused) {
         const resumePromise = focusAudio.play();
@@ -1552,7 +1552,7 @@
     if (phase === "focus") {
       startFocusSound(focusSoundSelect.value);
     } else {
-      setFocusAudioAudible(false);
+      pauseFocusAudio();
       stopWebAudio();
     }
 
@@ -1598,7 +1598,7 @@
   }
 
   function beginAlert(nextPhase) {
-    setFocusAudioAudible(false);
+    pauseFocusAudio();
     stopAlertAudio();
     stopWebAudio();
     alertNextPhase = nextPhase;
