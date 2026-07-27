@@ -186,3 +186,30 @@ Version 38 does not create a new audio element when the timer ends. During the S
 - It is then paused and reset to the beginning
 - The focus-end alert reuses the same retained audio element
 - Changing the selected alert also primes the new selection within that user action
+
+
+## 集中BGMの2周目以降の再生
+
+第39版では、集中BGM用の `HTMLAudioElement` を1セットごとに作り直さず、同じ要素をセッション中ずっと保持します。
+
+- 最初の集中開始時にBGMを再生
+- 集中終了〜休憩中はBGMを停止せず、音量を0にして無音化
+- 次の集中開始時は新しい `play()` を行わず、同じAudio要素の音量を元に戻す
+- 手動の一時停止ではBGMを `pause()` し、手動の再スタート時に同じ要素を再開
+- リセット時のみ、BGMを停止して先頭へ戻し、保持しているAudio要素を破棄
+
+これにより、iPhoneで2周目以降の自動開始時に新しい音声再生が拒否される問題を避けます。
+
+---
+
+## Focus BGM Playback Across Multiple Cycles
+
+Version 39 keeps the same focus-BGM `HTMLAudioElement` alive for the entire timer session instead of recreating it for each focus cycle.
+
+- The BGM starts during the first focus session
+- During alerts and breaks, playback continues silently with volume set to 0
+- The next focus session restores the volume without starting a new audio element
+- Manual pause pauses the BGM, and manual resume restarts the same retained element
+- Reset fully stops, rewinds, and discards the retained BGM element
+
+This avoids iPhone rejecting a new automatic audio playback request when the second and later focus cycles begin.

@@ -280,6 +280,8 @@
 
   let audioContext = null;
   let focusAudio = null;
+  let focusAudioType = null;
+  let focusAudioTargetVolume = 0.28;
   let alertAudio = null;
   const alertAudioPool = new Map();
   let activeAudioNodes = [];
@@ -817,18 +819,43 @@
     return node;
   }
 
-  function stopAllAudio() {
-    if (focusAudio) {
-      focusAudio.pause();
-      focusAudio.currentTime = 0;
-      focusAudio = null;
+  function setFocusAudioAudible(isAudible) {
+    if (!focusAudio) {
+      return;
     }
 
-    if (alertAudio) {
-      alertAudio.pause();
-      alertAudio.currentTime = 0;
+    focusAudio.volume = isAudible ? focusAudioTargetVolume : 0;
+  }
+
+  function pauseFocusAudio() {
+    if (!focusAudio) {
+      return;
     }
 
+    focusAudio.pause();
+  }
+
+  function resetFocusAudio() {
+    if (!focusAudio) {
+      return;
+    }
+
+    focusAudio.pause();
+    focusAudio.currentTime = 0;
+    focusAudio = null;
+    focusAudioType = null;
+  }
+
+  function stopAlertAudio() {
+    if (!alertAudio) {
+      return;
+    }
+
+    alertAudio.pause();
+    alertAudio.currentTime = 0;
+  }
+
+  function stopWebAudio() {
     if (focusTickIntervalId !== null) {
       window.clearInterval(focusTickIntervalId);
       focusTickIntervalId = null;
@@ -851,6 +878,12 @@
     }
 
     activeAudioNodes = [];
+  }
+
+  function stopAllAudio() {
+    resetFocusAudio();
+    stopAlertAudio();
+    stopWebAudio();
   }
 
   function playTone(frequency, durationSeconds, options = {}) {
@@ -1066,30 +1099,53 @@
     });
   }
 
-  function playFocusAudioFile(sourcePath) {
-    stopAllAudio();
+  function playFocusAudioFile(sourcePath, type) {
+    if (focusAudio && focusAudioType === type) {
+      setFocusAudioAudible(true);
+
+      if (focusAudio.paused) {
+        const resumePromise = focusAudio.play();
+        if (resumePromise && typeof resumePromise.catch === "function") {
+          resumePromise.catch(() => {
+            // ユーザー操作なしでの再開が拒否された場合は、次の手動再開で復帰します。
+          });
+        }
+      }
+      return;
+    }
+
+    resetFocusAudio();
 
     focusAudio = new Audio(sourcePath);
+    focusAudioType = type;
     focusAudio.loop = true;
     focusAudio.preload = "auto";
-    focusAudio.volume = 0.28;
+    focusAudio.volume = focusAudioTargetVolume;
 
     const playPromise = focusAudio.play();
 
     if (playPromise && typeof playPromise.catch === "function") {
       playPromise.catch(() => {
-        focusAudio = null;
+        // Audio要素は保持し、ユーザー操作時に再開できるようにします。
       });
     }
   }
 
   function startFocusSound(type) {
+    stopWebAudio();
+
     if (type === "cafe-file") {
-      playFocusAudioFile("sounds/pwlpl-busy-coffee-shop-ambiance-with-crowd-chatter-481151.mp3");
+      playFocusAudioFile(
+        "sounds/pwlpl-busy-coffee-shop-ambiance-with-crowd-chatter-481151.mp3",
+        "cafe-file"
+      );
       return;
     }
 
-    playFocusAudioFile("sounds/dragon-studio-gentle-midday-rain-499668.mp3");
+    playFocusAudioFile(
+      "sounds/dragon-studio-gentle-midday-rain-499668.mp3",
+      "gentle-rain-file"
+    );
   }
 
   function stopPreviewTimer() {
@@ -1119,12 +1175,14 @@
   function previewFocus() {
     if (isFocusPreviewPlaying) {
       stopPreviewTimer();
-      stopAllAudio();
+      resetFocusAudio();
+      stopWebAudio();
       return;
     }
 
     stopPreviewTimer();
-    stopAllAudio();
+    resetFocusAudio();
+    stopWebAudio();
     startFocusSound(focusSoundSelect.value);
 
     isFocusPreviewPlaying = true;
@@ -1132,7 +1190,8 @@
     previewFocusButton.setAttribute("aria-pressed", "true");
 
     previewTimeoutId = window.setTimeout(() => {
-      stopAllAudio();
+      resetFocusAudio();
+      stopWebAudio();
       previewTimeoutId = null;
       isFocusPreviewPlaying = false;
       previewFocusButton.textContent = t("preview");
@@ -1493,7 +1552,8 @@
     if (phase === "focus") {
       startFocusSound(focusSoundSelect.value);
     } else {
-      stopAllAudio();
+      setFocusAudioAudible(false);
+      stopWebAudio();
     }
 
     updateDisplay();
@@ -1538,7 +1598,9 @@
   }
 
   function beginAlert(nextPhase) {
-    stopAllAudio();
+    setFocusAudioAudible(false);
+    stopAlertAudio();
+    stopWebAudio();
     alertNextPhase = nextPhase;
     phase = "alert";
     remainingSeconds = 0;
@@ -1553,7 +1615,8 @@
     playAlertSound(alertSoundSelect.value);
 
     alertTimeoutId = window.setTimeout(() => {
-      stopAllAudio();
+      stopAlertAudio();
+      stopWebAudio();
       alertTimeoutId = null;
 
       if (alertNextPhase === "break") {
@@ -1573,7 +1636,9 @@
     await primeSelectedAlertAudio();
     unlockAudioContext();
     stopPreviewTimer();
-    stopAllAudio();
+    resetFocusAudio();
+    stopAlertAudio();
+    stopWebAudio();
     saveSettings();
 
     const focusMinutes = clampFocusMinutes(focusMinutesInput.value);
@@ -1602,7 +1667,9 @@
     endTime = null;
 
     stopInterval();
-    stopAllAudio();
+    pauseFocusAudio();
+    stopAlertAudio();
+    stopWebAudio();
     clearDimModeTimer();
     leaveDimMode();
     releaseWakeLock();
@@ -1630,7 +1697,9 @@
     stopInterval();
     stopAlertTimeout();
     stopPreviewTimer();
-    stopAllAudio();
+    resetFocusAudio();
+    stopAlertAudio();
+    stopWebAudio();
     releaseWakeLock();
 
     phase = "focus";
@@ -1684,7 +1753,8 @@
   });
   focusSoundSelect.addEventListener("change", () => {
     stopPreviewTimer();
-    stopAllAudio();
+    resetFocusAudio();
+    stopWebAudio();
     saveSettings();
   });
   breakEndAlertCheckbox.addEventListener("change", saveSettings);
