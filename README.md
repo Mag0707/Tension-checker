@@ -326,3 +326,25 @@ Version 41 updates the timer screen design as follows.
 - Reverted the layout changes from version 44 and restored version 43 as the base
 - Timer, ring, typography, spacing, card, and button sizing remain unchanged from version 43
 - Only the paused Start and Reset buttons are displayed side by side
+
+
+## 第46版：トップ装飾・操作ボタン・プルダウン調整
+
+- トップの「TENSION CHECK TIMER」を削除
+- トップの時計SVG画像を削除
+- 第45版のタイマー、リング、文字サイズは変更なし
+- トップの「スタート」と、集中中・休憩中の操作ボタンの高さ・角丸を統一
+- 一時停止中の「スタート」「リセット」は横並びを維持
+- iPhoneでプルダウンの選択矢印が内側にずれる問題を避けるため、標準矢印を無効化
+- 独自SVG矢印を右端から一定距離の位置に固定
+
+---
+
+## Version 46: Header, Controls, and Select Arrow
+
+- Removed the “TENSION CHECK TIMER” eyebrow
+- Removed the clock SVG from the top
+- Kept all timer, ring, and typography sizes from version 45
+- Matched the height and corner radius of timer controls to the setup Start button
+- Kept paused Start and Reset buttons side by side
+- Replaced the inconsistent iOS native select arrow with a custom SVG arrow fixed to the right edge
