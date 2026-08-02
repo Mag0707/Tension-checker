@@ -31,7 +31,7 @@
       digital: "電子音",
       preview: "試聴",
       stopPreview: "停止",
-      alertHelp: "集中終了時に約2秒だけ鳴ります。",
+      alertHelp: "集中終了時は、約2秒のアラートを2回鳴らします。",
       breakEndSameSound: "休憩終了時にも同じ音を鳴らす",
       breakEndHelp: "約2秒鳴った後、次の集中時間を始めます。",
       focusSound: "集中中の音",
@@ -269,6 +269,7 @@
   let endTime = null;
   let intervalId = null;
   let alertTimeoutId = null;
+  let alertReplayTimeoutId = null;
   let previewTimeoutId = null;
   let isFocusPreviewPlaying = false;
   let phase = "focus";
@@ -500,7 +501,7 @@
     const localizedQuestion = pendingBodyCheck[selectedLanguage];
     bodyCheckInstruction.textContent = localizedQuestion.instruction;
     bodyCheckQuestion.textContent = localizedQuestion.question;
-    bodyCheckBreakTime.textContent = formatTime(remainingSeconds);
+    bodyCheckBreakTime.textContent = formatCompactTime(remainingSeconds);
     bodyCheckAnswers.innerHTML = "";
 
     for (const answer of BODY_CHECK_ANSWERS) {
@@ -1580,6 +1581,11 @@
       window.clearTimeout(alertTimeoutId);
       alertTimeoutId = null;
     }
+
+    if (alertReplayTimeoutId !== null) {
+      window.clearTimeout(alertReplayTimeoutId);
+      alertReplayTimeoutId = null;
+    }
   }
 
   function calculateRemainingSeconds() {
@@ -1656,6 +1662,7 @@
     pauseFocusAudio();
     stopAlertAudio();
     stopWebAudio();
+    stopAlertTimeout();
     alertNextPhase = nextPhase;
     phase = "alert";
     remainingSeconds = 0;
@@ -1668,6 +1675,19 @@
     updateDisplay();
     saveTimerState();
     playAlertSound(alertSoundSelect.value);
+
+    const movingToBreak = alertNextPhase === "break";
+    const transitionDelay = movingToBreak
+      ? ALERT_DURATION_MS * 2 + 450
+      : ALERT_DURATION_MS;
+
+    if (movingToBreak) {
+      alertReplayTimeoutId = window.setTimeout(() => {
+        stopAlertAudio();
+        playAlertSound(alertSoundSelect.value);
+        alertReplayTimeoutId = null;
+      }, ALERT_DURATION_MS + 250);
+    }
 
     alertTimeoutId = window.setTimeout(() => {
       stopAlertAudio();
@@ -1684,7 +1704,7 @@
       phase = "focus";
       cycle += 1;
       beginCountdown(focusSeconds);
-    }, ALERT_DURATION_MS);
+    }, transitionDelay);
   }
 
   async function startTimer() {

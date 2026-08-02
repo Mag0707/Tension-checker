@@ -290,3 +290,24 @@ Version 41 updates the timer screen design as follows.
 - A 25-minute timer begins with the arc ending at approximately 5 o'clock
 - The arc shrinks back toward 12 o'clock as time counts down
 - Exact hour durations such as 60 or 120 minutes begin with a full ring
+
+
+## 第43版：身体チェック表示と集中終了アラート
+
+- 第41版以降の時刻表示変更により、身体チェック表示時に存在しない旧関数を呼び出していた問題を修正
+- 休憩開始時に身体チェック質問が再び表示されるよう修正
+- 質問内の休憩残り時間も `05 m 00 s` 形式で表示
+- 集中終了から休憩へ入る際のアラートを1回から2回へ変更
+- 1回目と2回目の間に短い間隔を設け、2回目の再生後に休憩と質問画面を開始
+- リセットなどで途中終了した場合に、予約済みの2回目アラートが後から鳴らないようタイマーを管理
+
+---
+
+## Version 43: Body Check and Double Focus-End Alert
+
+- Fixed a regression where the body-check dialog called an obsolete time-formatting function
+- Restored the body-check question when the break begins
+- The remaining break time in the dialog uses the `05 m 00 s` format
+- The focus-end alert now plays twice before entering the break
+- The break and body-check dialog begin after the second alert finishes
+- Pending replay timers are cleared on reset or interruption
