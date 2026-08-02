@@ -369,3 +369,22 @@ Version 41 updates the timer screen design as follows.
 - Positioned the setup Start button lower using the remaining screen height
 - Increased spacing and padding inside the timer settings card
 - Added a compact fallback for shorter PWA screens
+
+
+## 第48版：トップのスタート位置をタイマー画面と統一
+
+- トップ画面と集中中・休憩中画面で、ヘッダー下の利用可能な高さを共通化
+- トップの「スタート」を、集中中画面の「一時停止」と同じ下端位置へ配置
+- 一時停止中の「スタート」「リセット」も同じ下端位置を維持
+- 高さが不足する場合は、タイマー設定枠内の余白だけを段階的に縮小
+- リング、文字、入力欄、ボタン本体のサイズは変更なし
+
+---
+
+## Version 48: Aligned Bottom Control Position
+
+- Shared the same available height between the setup and timer screens
+- Positioned the setup Start button at the same lower location as the timer Pause button
+- Kept paused Start and Reset controls aligned to the same bottom position
+- On shorter screens, only spacing inside the settings card is reduced
+- Timer, typography, input, and button sizes remain unchanged
