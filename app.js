@@ -1158,22 +1158,34 @@
     );
   }
 
+  function setPreviewButtonState(button, isPlaying) {
+    button.classList.toggle("is-playing", isPlaying);
+    button.setAttribute("aria-pressed", String(isPlaying));
+    button.setAttribute(
+      "aria-label",
+      isPlaying ? t("stopPreview") : t("preview")
+    );
+  }
+
+  function refreshPreviewButtonLabels() {
+    previewAlertButton.setAttribute("aria-label", t("preview"));
+    setPreviewButtonState(previewFocusButton, isFocusPreviewPlaying);
+  }
+
   function stopPreviewTimer() {
     if (previewTimeoutId !== null) {
       window.clearTimeout(previewTimeoutId);
       previewTimeoutId = null;
     }
 
-    if (isFocusPreviewPlaying) {
-      isFocusPreviewPlaying = false;
-      previewFocusButton.textContent = t("preview");
-      previewFocusButton.setAttribute("aria-pressed", "false");
-    }
+    isFocusPreviewPlaying = false;
+    refreshPreviewButtonLabels();
   }
 
   function previewAlert() {
     unlockAudioContext();
     stopPreviewTimer();
+    stopAllAudio();
     playAlertSound(alertSoundSelect.value);
 
     previewTimeoutId = window.setTimeout(() => {
@@ -1196,16 +1208,14 @@
     startFocusSound(focusSoundSelect.value);
 
     isFocusPreviewPlaying = true;
-    previewFocusButton.textContent = t("stopPreview");
-    previewFocusButton.setAttribute("aria-pressed", "true");
+    setPreviewButtonState(previewFocusButton, true);
 
     previewTimeoutId = window.setTimeout(() => {
       resetFocusAudio();
       stopWebAudio();
       previewTimeoutId = null;
       isFocusPreviewPlaying = false;
-      previewFocusButton.textContent = t("preview");
-      previewFocusButton.setAttribute("aria-pressed", "false");
+      setPreviewButtonState(previewFocusButton, false);
     }, PREVIEW_DURATION_MS);
   }
 
@@ -1440,6 +1450,7 @@
 
     updateHistoryCount();
     updateDurationWheelSelection(focusMinutesInput.value);
+    refreshPreviewButtonLabels();
 
     if (shouldRefreshDisplay) {
       updateDisplay();

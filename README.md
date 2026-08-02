@@ -529,3 +529,78 @@ Version 41 updates the timer screen design as follows.
 - Kept the wheel layout and centered selected values
 - Restored SVG arrows for both sound selects
 - Fixed the arrows inside the right edge of each select
+
+
+## 第56版：試聴ボタンをアイコン化
+
+- 「試聴」の文字ボタンをスピーカー＋音波アイコンへ変更
+- 再生中は四角い停止アイコンへ切り替え
+- アラート音と集中中の音の両方で、再度タップすると途中停止可能
+- 読み上げ用の「試聴／停止」ラベルを維持
+- アイコン化に合わせてボタン幅をコンパクトに調整
+
+---
+
+## Version 56: Icon Preview Buttons
+
+- Replaced text preview buttons with speaker-and-sound-wave icons
+- Shows a square stop icon while preview audio is playing
+- Both preview buttons can stop playback when tapped again
+- Preserved accessible Preview/Stop labels
+- Reduced button width to fit the icon-based design
+
+
+## 第57版：停止アイコンと音設定欄の位置調整
+
+- 再生中の四角い停止アイコンを塗りつぶし表示へ変更
+- プルダウンと試聴アイコンを1つのまとまりとして中央配置
+- 左右の余白を同じ幅に調整
+- プルダウン下の説明文を、プルダウンの開始位置に揃えて配置
+
+---
+
+## Version 57: Filled Stop Icon and Centered Sound Controls
+
+- Changed the square stop icon to a filled shape
+- Centered each select-and-preview-button group
+- Equalized the left and right outer spacing
+- Aligned the help text with the left edge of the select
+
+
+## 第58版：音設定欄の中央配置とアラート試聴アイコン
+
+- プルダウン・試聴アイコン・説明文を同じ親ブロックへ統合
+- 音設定ブロック全体を固定幅で中央配置し、左右余白を同じに調整
+- 説明文の左端を、プルダウンの左端と完全に一致
+- 集中終了アラート音の試聴ボタンは、再生中もスピーカーアイコンのまま維持
+- アラート試聴は1回再生し、再生後に再度スピーカーを押すと再生可能
+- 集中中の音のみ、再生中は塗りつぶしの停止アイコンへ切り替え
+
+---
+
+## Version 58: Centered Sound Controls and Alert Preview Icon
+
+- Grouped each select, preview button, and help text in one centered block
+- Equalized the left and right spacing
+- Precisely aligned help text with the select's left edge
+- Kept the alert preview button as a speaker icon during playback
+- The alert preview plays once and can be triggered again afterward
+- Only the focus-sound preview changes to a filled stop icon while playing
+
+
+## 第59版：集中時間ブロックの中央配置とスピーカー形状
+
+- 集中時間のホイールと説明文を同じ親ブロックへ統合
+- 音設定ブロックと同じ幅で中央配置
+- 集中時間ホイール・説明文の左端を、集中終了アラート音プルダウンの左端と統一
+- スピーカーアイコンを少し縦長に調整
+- アイコンボタン全体の大きさは維持
+
+---
+
+## Version 59: Centered Duration Block and Taller Speaker Icon
+
+- Grouped the duration wheels and help text in one centered block
+- Matched its width to the sound-control blocks
+- Aligned the duration block's left edge with the alert-sound select
+- Made the speaker icon slightly taller without changing the button size

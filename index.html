@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <title>過緊張チェックタイマー</title>
-  <link rel="stylesheet" href="style.css?v=55">
+  <link rel="stylesheet" href="style.css?v=59">
 </head>
 <body>
   <main class="app-shell">
@@ -53,63 +53,84 @@
 
         <div id="focus-minutes-group">
           <label class="field-label" for="focus-minutes" data-i18n="focusDuration">集中時間</label>
-          <div class="duration-wheel-wrap">
-            <div class="duration-wheel-column">
-              <div class="duration-wheel-frame">
-                <div
-                  id="focus-hour-wheel"
-                  class="duration-wheel"
-                  role="listbox"
-                  tabindex="0"
-                  aria-label="時間"
-                  aria-describedby="minute-help"
-                ></div>
+          <div class="duration-control-block">
+            <div class="duration-wheel-wrap">
+              <div class="duration-wheel-column">
+                <div class="duration-wheel-frame">
+                  <div
+                    id="focus-hour-wheel"
+                    class="duration-wheel"
+                    role="listbox"
+                    tabindex="0"
+                    aria-label="時間"
+                    aria-describedby="minute-help"
+                  ></div>
+                </div>
+                <span class="duration-wheel-unit" data-i18n="hoursUnit">時間</span>
               </div>
-              <span class="duration-wheel-unit" data-i18n="hoursUnit">時間</span>
-            </div>
-            <div class="duration-wheel-column">
-              <div class="duration-wheel-frame">
-                <div
-                  id="focus-minute-wheel"
-                  class="duration-wheel"
-                  role="listbox"
-                  tabindex="0"
-                  aria-label="分"
-                  aria-describedby="minute-help"
-                ></div>
+              <div class="duration-wheel-column">
+                <div class="duration-wheel-frame">
+                  <div
+                    id="focus-minute-wheel"
+                    class="duration-wheel"
+                    role="listbox"
+                    tabindex="0"
+                    aria-label="分"
+                    aria-describedby="minute-help"
+                  ></div>
+                </div>
+                <span class="duration-wheel-unit" data-i18n="minutesUnit">分</span>
               </div>
-              <span class="duration-wheel-unit" data-i18n="minutesUnit">分</span>
+              <input id="focus-minutes" type="hidden" value="25">
             </div>
-            <input id="focus-minutes" type="hidden" value="25">
+            <p id="minute-help" class="help-text" data-i18n="minuteHelp">2時間まで分単位で指定できます。休憩は5分固定です。</p>
           </div>
-          <p id="minute-help" class="help-text" data-i18n="minuteHelp">2時間まで分単位で指定できます。休憩は5分固定です。</p>
         </div>
 
         <div class="setting-group">
           <label class="field-label" for="alert-sound" data-i18n="focusEndAlert">集中終了のアラート音</label>
-          <div class="sound-row">
-            <select id="alert-sound">
-              <option value="soft-chime" data-i18n="softChime">やわらかいチャイム</option>
-              <option value="bell" data-i18n="bell">ベル</option>
-              <option value="digital" data-i18n="digital">電子音</option>
-            </select>
-            <button id="preview-alert-button" class="preview-button" type="button" data-i18n="preview">試聴</button>
+          <div class="sound-control-block">
+            <div class="sound-row">
+              <select id="alert-sound">
+                <option value="soft-chime" data-i18n="softChime">やわらかいチャイム</option>
+                <option value="bell" data-i18n="bell">ベル</option>
+                <option value="digital" data-i18n="digital">電子音</option>
+              </select>
+              <button id="preview-alert-button" class="preview-button icon-preview-button alert-preview-button" type="button" aria-label="試聴">
+                <svg class="preview-icon preview-icon-speaker" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 10v4h4l5 4V6L8 10H4z"></path>
+                  <path d="M16 9.5c1.15 1.15 1.15 3.85 0 5"></path>
+                  <path d="M18.5 7c2.6 2.6 2.6 7.4 0 10"></path>
+                </svg>
+              </button>
+            </div>
+            <p class="help-text" data-i18n="alertHelp">集中終了時に約2秒だけ鳴ります。</p>
           </div>
-          <p class="help-text" data-i18n="alertHelp">集中終了時に約2秒だけ鳴ります。</p>
 
           <input id="break-end-alert" type="checkbox" checked hidden>
         </div>
 
         <div class="setting-group">
           <label class="field-label" for="focus-sound" data-i18n="focusSound">集中中の音</label>
-          <div class="sound-row">
-            <select id="focus-sound">
-              <option value="gentle-rain-file" data-i18n="gentleRain">やさしい雨</option>
-              <option value="cafe-file" data-i18n="cafeAmbience">カフェの環境音</option>
-            </select>
-            <button id="preview-focus-button" class="preview-button" type="button" data-i18n="preview">試聴</button>
+          <div class="sound-control-block">
+            <div class="sound-row">
+              <select id="focus-sound">
+                <option value="gentle-rain-file" data-i18n="gentleRain">やさしい雨</option>
+                <option value="cafe-file" data-i18n="cafeAmbience">カフェの環境音</option>
+              </select>
+              <button id="preview-focus-button" class="preview-button icon-preview-button" type="button" aria-label="試聴" aria-pressed="false">
+                <svg class="preview-icon preview-icon-speaker" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 10v4h4l5 4V6L8 10H4z"></path>
+                  <path d="M16 9.5c1.15 1.15 1.15 3.85 0 5"></path>
+                  <path d="M18.5 7c2.6 2.6 2.6 7.4 0 10"></path>
+                </svg>
+                <svg class="preview-icon preview-icon-stop" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect x="7" y="7" width="10" height="10" rx="1.5"></rect>
+                </svg>
+              </button>
+            </div>
+            <p class="help-text compact" data-i18n="focusSoundHelp">休憩中と一時停止中は必ず無音になります。</p>
           </div>
-          <p class="help-text compact" data-i18n="focusSoundHelp">休憩中と一時停止中は必ず無音になります。</p>
         </div>
 
       </div>
@@ -261,6 +282,6 @@
     </section>
   </div>
 
-  <script src="app.js?v=55"></script>
+  <script src="app.js?v=59"></script>
 </body>
 </html>
