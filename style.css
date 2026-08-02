@@ -48,13 +48,6 @@ select {
   text-align: center;
 }
 
-.eyebrow {
-  margin: 0 0 10px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: #718096;
-}
 
 h1,
 h2,
@@ -94,60 +87,12 @@ h2 {
   font-weight: 700;
 }
 
-.minute-control {
-  display: grid;
-  grid-template-columns: 64px 1fr 64px;
-  gap: 12px;
-  align-items: center;
-}
 
-.step-button {
-  min-height: 64px;
-  border: 1px solid #d9e0e4;
-  border-radius: 18px;
-  background: #f8fafb;
-  color: #33404c;
-  font-size: 2rem;
-}
-
-.step-button:active,
-.preview-button:active {
+.preview-button:active{
   transform: scale(0.98);
   background: #eef3f5;
 }
 
-.minute-display {
-  min-height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
-  border: 1px solid #d9e0e4;
-  border-radius: 18px;
-  background: #ffffff;
-}
-
-.minute-display input {
-  width: 72px;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  color: #1f2933;
-  font-size: 1.9rem;
-  font-weight: 700;
-  text-align: right;
-  appearance: textfield;
-}
-
-.minute-display input::-webkit-outer-spin-button,
-.minute-display input::-webkit-inner-spin-button {
-  margin: 0;
-  appearance: none;
-}
-
-.minute-display span {
-  color: #62707d;
-}
 
 .help-text {
   margin: 12px 0 28px;
@@ -356,8 +301,7 @@ select {
   display: none !important;
 }
 
-@media (max-height: 760px) {
-  .app-shell {
+@media (max-height: 760px) {.app-shell {
     justify-content: flex-start;
   }
 
@@ -369,11 +313,9 @@ select {
   .timer-card {
     padding-top: 24px;
     padding-bottom: 24px;
-  }
-}
+  }}
 
 
-/* 省画面モード */
 .timer-card,
 .timer-content,
 .phase-label,
@@ -481,8 +423,7 @@ body:not(.dim-mode) .dim-mode-hint {
   display: none !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .timer-card,
+@media (prefers-reduced-motion: reduce) {.timer-card,
   .timer-content,
   .phase-label,
   .time-display,
@@ -493,11 +434,9 @@ body:not(.dim-mode) .dim-mode-hint {
   .secondary-button,
   .alert-note {
     transition: none;
-  }
-}
+  }}
 
 
-/* 省画面モードでは、状態・タイマー・メッセージ以外を背景と同化させる */
 body.dim-mode .app-header,
 body.dim-mode .cycle-display,
 body.dim-mode .wake-lock-status,
@@ -541,7 +480,6 @@ body.dim-mode .timer-card {
 }
 
 
-/* 第8版：省画面モードを完全な黒背景に統一 */
 body.dim-mode,
 body.dim-mode .app-shell,
 body.dim-mode #timer-screen,
@@ -585,84 +523,7 @@ body.dim-mode .check-message {
 }
 
 
-/* 第9版：休憩終了音の設定 */
-.toggle-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 14px;
-  align-items: center;
-  min-height: 68px;
-  padding: 12px 14px;
-  border: 1px solid #d9e0e4;
-  border-radius: 15px;
-  background: #f8fafb;
-  cursor: pointer;
-}
-
-.toggle-text {
-  display: grid;
-  gap: 4px;
-  line-height: 1.4;
-}
-
-.toggle-text strong {
-  font-size: 0.95rem;
-}
-
-.toggle-text small {
-  color: #718096;
-  font-size: 0.8rem;
-}
-
-.toggle-row input {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.toggle-switch {
-  position: relative;
-  width: 48px;
-  height: 28px;
-  border-radius: 999px;
-  background: #cbd3d7;
-  transition: background-color 0.2s ease;
-}
-
-.toggle-switch::after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 2px 6px rgba(31, 41, 51, 0.2);
-  transition: transform 0.2s ease;
-}
-
-.toggle-row input:checked + .toggle-switch {
-  background: #2f6f68;
-}
-
-.toggle-row input:checked + .toggle-switch::after {
-  transform: translateX(20px);
-}
-
-.toggle-row input:focus-visible + .toggle-switch {
-  outline: 3px solid rgba(47, 111, 104, 0.25);
-  outline-offset: 3px;
-}
-
-
-/* 第11版：
-   iPhone 16 ProのPWA縦画面では、ヘッダーを第9版のまま保ち、
-   タイマー設定カードだけを圧縮してスタートボタンを画面下端付近に配置する */
-@media (max-width: 430px) and (max-height: 900px) {
-  .app-shell {
+@media (max-width: 430px) and (max-height: 900px) {.app-shell {
     min-height: 100svh;
     padding:
       max(18px, env(safe-area-inset-top))
@@ -672,7 +533,7 @@ body.dim-mode .check-message {
     gap: 18px;
   }
 
-  /* アプリ名・説明文は第9版のサイズ感を維持 */
+  
   .app-header {
     flex: 0 0 auto;
   }
@@ -701,25 +562,13 @@ body.dim-mode .check-message {
     font-size: 0.92rem;
   }
 
-  #setup-screen .minute-control {
-    grid-template-columns: 54px 1fr 54px;
-    gap: 9px;
-  }
+  
 
-  #setup-screen .step-button,
-  #setup-screen .minute-display {
-    min-height: 52px;
-    border-radius: 15px;
-  }
+  
 
-  #setup-screen .step-button {
-    font-size: 1.65rem;
-  }
+  
 
-  #setup-screen .minute-display input {
-    width: 66px;
-    font-size: 1.65rem;
-  }
+  
 
   #setup-screen .help-text {
     margin: 7px 0 13px;
@@ -748,53 +597,29 @@ body.dim-mode .check-message {
     padding-right: 32px;
   }
 
-  #setup-screen .toggle-row {
-    min-height: 56px;
-    padding: 8px 11px;
-    border-radius: 12px;
-    gap: 10px;
-  }
+  
 
-  #setup-screen .toggle-text {
-    gap: 2px;
-  }
+  
 
-  #setup-screen .toggle-text strong {
-    font-size: 0.84rem;
-  }
+  
 
-  #setup-screen .toggle-text small {
-    font-size: 0.7rem;
-    line-height: 1.3;
-  }
+  
 
-  #setup-screen .toggle-switch {
-    width: 42px;
-    height: 24px;
-  }
+  
 
-  #setup-screen .toggle-switch::after {
-    top: 3px;
-    left: 3px;
-    width: 18px;
-    height: 18px;
-  }
+  
 
-  #setup-screen .toggle-row input:checked + .toggle-switch::after {
-    transform: translateX(18px);
-  }
+  
 
-  /* 残った高さをここで吸収し、ボタンを画面下端へ寄せる */
+  
   #setup-screen #start-button {
     margin-top: auto;
     min-height: 54px;
     border-radius: 15px;
-  }
-}
+  }}
 
-/* 高さが少し小さいPWA表示でも収めるための微調整 */
-@media (max-width: 430px) and (max-height: 850px) {
-  .app-shell {
+
+@media (max-width: 430px) and (max-height: 850px) {.app-shell {
     gap: 14px;
     padding-top: max(14px, env(safe-area-inset-top));
   }
@@ -813,23 +638,18 @@ body.dim-mode .check-message {
 
   #setup-screen .help-text {
     margin-bottom: 10px;
-  }
-}
+  }}
 
 
-/* 第12版：説明文はスマホ時だけ意図した位置で改行 */
 .mobile-break {
   display: none;
 }
 
-@media (max-width: 430px) {
-  .mobile-break {
+@media (max-width: 430px) {.mobile-break {
     display: inline;
-  }
-}
+  }}
 
 
-/* 第13版：歯車ボタン＋テーマ切替ボトムシート */
 :root {
   --theme-bg-top: #ffffff;
   --theme-bg-bottom: #f7f1e9;
@@ -895,11 +715,7 @@ body:not(.dim-mode) {
   background: linear-gradient(180deg, var(--theme-bg-top) 0%, var(--theme-bg-bottom) 100%);
 }
 
-body:not(.dim-mode) .eyebrow,
-body:not(.dim-mode) .subtitle,
-body:not(.dim-mode) .help-text,
-body:not(.dim-mode) .cycle-display,
-body:not(.dim-mode) .wake-lock-status {
+body:not(.dim-mode) .subtitle, body:not(.dim-mode) .help-text, body:not(.dim-mode) .cycle-display, body:not(.dim-mode) .wake-lock-status{
   color: var(--theme-muted);
 }
 
@@ -916,17 +732,13 @@ body:not(.dim-mode) .timer-card {
   box-shadow: 0 14px 40px var(--theme-shadow);
 }
 
-body:not(.dim-mode) .step-button,
-body:not(.dim-mode) .preview-button,
-body:not(.dim-mode) .toggle-row {
+body:not(.dim-mode) .preview-button{
   background: var(--theme-surface-soft);
   border-color: var(--theme-border);
   color: var(--theme-text);
 }
 
-body:not(.dim-mode) .minute-display,
-body:not(.dim-mode) select,
-body:not(.dim-mode) .secondary-button {
+body:not(.dim-mode) select, body:not(.dim-mode) .secondary-button{
   background: var(--theme-surface);
   border-color: var(--theme-border);
   color: var(--theme-text);
@@ -941,9 +753,6 @@ body:not(.dim-mode) .primary-button:active {
   background: var(--theme-accent-strong);
 }
 
-body:not(.dim-mode) .toggle-row input:checked + .toggle-switch {
-  background: var(--theme-accent);
-}
 
 body:not(.dim-mode) .restore-notice,
 body:not(.dim-mode) .alert-note {
@@ -1123,32 +932,12 @@ body:not(.dim-mode) .alert-note {
   height: 40px;
 }
 
-.theme-preview-beige {
-  background: #fff8ef;
-}
-.theme-preview-beige span { background: #d7ad7f; }
-
-.theme-preview-lavender {
-  background: #f7f2fd;
-}
-.theme-preview-lavender span { background: #ad92d9; }
-
-.theme-preview-mint {
-  background: #f0f8f5;
-}
-.theme-preview-mint span { background: #8bb9a7; }
-
-.theme-preview-pink {
-  background: #fff3f3;
-}
-.theme-preview-pink span { background: #e79b9f; }
 
 body.sheet-open {
   overflow: hidden;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  .settings-heading-row {
+@media (max-width: 430px) and (max-height: 900px) {.settings-heading-row {
     margin-bottom: 14px;
   }
 
@@ -1164,11 +953,9 @@ body.sheet-open {
     max-height: 82svh;
     padding-left: 16px;
     padding-right: 16px;
-  }
-}
+  }}
 
 
-/* 第14版：カラーパレット見本に合わせたパステル配色 */
 :root {
   --theme-bg-top: #fffdfa;
   --theme-bg-bottom: #fff4e9;
@@ -1237,243 +1024,13 @@ body[data-theme="pink"] {
   --theme-decor-soft: #f9dce1;
 }
 
-/* 軽量SVGの四隅装飾 */
-.theme-decoration {
-  position: fixed;
-  z-index: 0;
-  width: 132px;
-  height: 132px;
-  pointer-events: none;
-  opacity: 0.72;
-}
-
-.theme-decoration svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.theme-decoration-top {
-  top: max(4px, env(safe-area-inset-top));
-  right: -20px;
-}
-
-.theme-decoration-bottom {
-  left: -22px;
-  bottom: max(2px, env(safe-area-inset-bottom));
-  transform: rotate(7deg);
-}
-
-.decor-leaves path {
-  fill: var(--theme-decor-soft);
-  stroke: var(--theme-decor);
-  stroke-width: 2.2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.decor-flowers circle,
-.decor-dots circle {
-  fill: var(--theme-decor);
-}
-
-.decor-center {
-  fill: var(--theme-surface) !important;
-}
 
 .app-shell {
   position: relative;
   z-index: 1;
 }
 
-body.dim-mode .theme-decoration,
-body.sheet-open .theme-decoration {
-  opacity: 0;
-}
 
-body[data-theme="beige"] .decor-flowers {
-  opacity: 0.22;
-}
-
-body[data-theme="lavender"] .decor-flowers,
-body[data-theme="mint"] .decor-flowers {
-  opacity: 0;
-}
-
-body[data-theme="pink"] .decor-leaves {
-  opacity: 0.25;
-}
-
-body[data-theme="pink"] .decor-flowers {
-  opacity: 1;
-}
-
-/* テーマ選択パネル内の見本色も更新 */
-.theme-preview-beige {
-  background: #fff4e9 !important;
-}
-.theme-preview-beige span {
-  background: #f7b58e !important;
-}
-
-.theme-preview-lavender {
-  background: #f5effd !important;
-}
-.theme-preview-lavender span {
-  background: #bca5e4 !important;
-}
-
-.theme-preview-mint {
-  background: #eef9f5 !important;
-}
-.theme-preview-mint span {
-  background: #8fd4c1 !important;
-}
-
-.theme-preview-pink {
-  background: #fff0f2 !important;
-}
-.theme-preview-pink span {
-  background: #f4a6b1 !important;
-}
-
-@media (max-width: 430px) {
-  .theme-decoration {
-    width: 112px;
-    height: 112px;
-    opacity: 0.62;
-  }
-
-  .theme-decoration-top {
-    right: -28px;
-  }
-
-  .theme-decoration-bottom {
-    left: -30px;
-  }
-}
-
-
-/* 第15版：テーマごとに異なるSVG装飾 */
-.theme-decoration-set { display: none; }
-
-body:not(.dim-mode)[data-theme="beige"] .decor-beige,
-body:not(.dim-mode)[data-theme="lavender"] .decor-lavender,
-body:not(.dim-mode)[data-theme="mint"] .decor-mint,
-body:not(.dim-mode)[data-theme="pink"] .decor-pink {
-  display: block;
-}
-
-.theme-decoration-set .theme-decoration {
-  position: fixed;
-  z-index: 0;
-  width: 132px;
-  height: 132px;
-  pointer-events: none;
-  opacity: 0.72;
-}
-
-.theme-decoration-set .theme-decoration svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.theme-decoration-set .theme-decoration-top {
-  top: max(4px, env(safe-area-inset-top));
-  right: -20px;
-}
-
-.theme-decoration-set .theme-decoration-bottom {
-  left: -22px;
-  bottom: max(2px, env(safe-area-inset-bottom));
-}
-
-.twig .stem,
-.lavender-branch .stem,
-.lavender-branch .sprig,
-.round-leaves .stem {
-  fill: none;
-  stroke: var(--theme-decor);
-  stroke-width: 2.1;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.twig .leaf,
-.round-leaves ellipse {
-  fill: var(--theme-decor-soft);
-  stroke: var(--theme-decor);
-  stroke-width: 1.7;
-}
-
-.lavender-branch ellipse {
-  fill: var(--theme-decor);
-  opacity: 0.88;
-}
-
-.small-flowers circle {
-  fill: var(--theme-decor);
-}
-
-.small-flowers .center {
-  fill: var(--theme-surface);
-}
-
-body.sheet-open .theme-decoration-set,
-body.dim-mode .theme-decoration-set {
-  display: none !important;
-}
-
-@media (max-width: 430px) {
-  .theme-decoration-set .theme-decoration {
-    width: 112px;
-    height: 112px;
-    opacity: 0.62;
-  }
-
-  .theme-decoration-set .theme-decoration-top { right: -28px; }
-  .theme-decoration-set .theme-decoration-bottom { left: -30px; }
-}
-
-
-/* 第16版：選択されたSVG別案 */
-.lavender-simple .stem,
-.lavender-simple .side-stem,
-.mint-small-branch .stem,
-.mint-small-branch .twig-line,
-.pink-natural .stem,
-.pink-natural .branch {
-  fill: none;
-  stroke: var(--theme-decor);
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.lavender-simple ellipse,
-.lavender-simple circle {
-  fill: var(--theme-decor);
-  opacity: 0.9;
-}
-
-.mint-small-branch .leaf,
-.pink-natural .leaf {
-  fill: var(--theme-decor-soft);
-  stroke: var(--theme-decor);
-  stroke-width: 1.5;
-}
-
-.pink-natural .flower circle {
-  fill: var(--theme-decor);
-}
-
-.pink-natural .flower .center {
-  fill: var(--theme-surface);
-}
-
-
-/* 第17版：レイアウト整理と時計アイコン */
 .app-clock-icon {
   width: 58px;
   height: 58px;
@@ -1493,8 +1050,7 @@ body.dim-mode .theme-decoration-set {
   stroke-width: 2.5;
 }
 
-.app-clock-icon .clock-hand,
-.app-clock-icon .clock-accent {
+.app-clock-icon .clock-hand{
   fill: none;
   stroke: var(--theme-accent-strong);
   stroke-width: 3;
@@ -1559,18 +1115,12 @@ body.dim-mode .theme-decoration-set {
   background: transparent;
 }
 
-/* 旧四隅SVG装飾を完全に無効化 */
-.theme-decoration,
-.theme-decoration-set {
-  display: none !important;
-}
 
 body.dim-mode .app-clock-icon {
   opacity: 0;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  .app-clock-icon {
+@media (max-width: 430px) and (max-height: 900px) {.app-clock-icon {
     width: 50px;
     height: 50px;
     margin-bottom: 8px;
@@ -1603,11 +1153,9 @@ body.dim-mode .app-clock-icon {
   .icon-button svg {
     width: 22px;
     height: 22px;
-  }
-}
+  }}
 
 
-/* 第18版：スタートボタンと標準フォントの調整 */
 html,
 body,
 button,
@@ -1630,10 +1178,7 @@ body {
   letter-spacing: 0.01em;
 }
 
-.app-title,
-.settings-heading,
-.section-title,
-.primary-button {
+.primary-button{
   font-family:
     "Hiragino Maru Gothic ProN",
     "Hiragino Maru Gothic Pro",
@@ -1645,11 +1190,6 @@ body {
     sans-serif;
 }
 
-.app-title,
-.settings-heading {
-  font-weight: 700;
-  letter-spacing: 0.025em;
-}
 
 .setup-start-button {
   width: min(82%, 310px);
@@ -1659,30 +1199,18 @@ body {
   padding-inline: 28px;
 }
 
-/* タイマー設定カードの角丸は既存値を維持 */
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen #start-button {
+
+@media (max-width: 430px) and (max-height: 900px) {#setup-screen #start-button {
     width: min(80%, 292px);
     border-radius: 999px;
-  }
-}
+  }}
 
 
-/* 第19版：カード角丸・説明文・ベージュ配色・時計アイコン調整 */
-
-/* タイマー設定カードだけ、少し四角寄りにする */
 #setup-screen .card {
   border-radius: 18px;
 }
 
-/* 説明文を英字ラベルと同程度の小ささへ */
-.app-description {
-  font-size: 0.72rem;
-  line-height: 1.7;
-  letter-spacing: 0.06em;
-}
 
-/* ナチュラルベージュをオレンジ寄りから、落ち着いたベージュへ */
 :root,
 body[data-theme="beige"] {
   --theme-bg-top: #fdfcf9;
@@ -1701,24 +1229,12 @@ body[data-theme="beige"] {
   --theme-decor-soft: #ece2d7;
 }
 
-/* 時計上部の装飾線は廃止 */
-.app-clock-icon .clock-accent {
-  display: none;
-}
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen .card {
+@media (max-width: 430px) and (max-height: 900px) {#setup-screen .card {
     border-radius: 18px;
-  }
-
-  .app-description {
-    font-size: 0.7rem;
-    line-height: 1.65;
-  }
-}
+  }}
 
 
-/* 第20版：指定された文字だけを明確に太字化 */
 .app-header h1,
 #setup-title,
 label[for="focus-minutes"],
@@ -1730,31 +1246,15 @@ label[for="focus-sound"],
 }
 
 
-/* 第21版：説明文サイズと設定項目間隔の調整 */
-.app-description {
-  font-size: 0.78rem;
-  line-height: 1.65;
-  letter-spacing: 0.02em;
-}
-
-/* 「1〜120分で指定できます…」と次の項目の間を広げる */
 #minute-help {
   margin-bottom: 22px;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  .app-description {
-    font-size: 0.78rem;
-    line-height: 1.65;
-  }
-
-  #minute-help {
+@media (max-width: 430px) and (max-height: 900px) {#minute-help {
     margin-bottom: 20px;
-  }
-}
+  }}
 
 
-/* 第22版：第21版の修正を正しく反映 */
 .subtitle {
   font-size: 0.9rem;
   line-height: 1.65;
@@ -1771,8 +1271,7 @@ label[for="focus-sound"],
   line-height: 1.2;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  .subtitle {
+@media (max-width: 430px) and (max-height: 900px) {.subtitle {
     font-size: 0.9rem;
     line-height: 1.65;
   }
@@ -1784,11 +1283,9 @@ label[for="focus-sound"],
   #start-button,
   #resume-button {
     font-size: 1.25rem;
-  }
-}
+  }}
 
 
-/* 第23版：集中時間の項目を上へ移動 */
 .settings-heading-row {
   margin-bottom: 8px;
 }
@@ -1797,13 +1294,12 @@ label[for="focus-sound"],
   margin-top: -4px;
 }
 
-/* 直後のアラート項目との間隔は第22版の広さを維持 */
+
 #focus-minutes-group #minute-help {
   margin-bottom: 36px;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  .settings-heading-row {
+@media (max-width: 430px) and (max-height: 900px) {.settings-heading-row {
     margin-bottom: 8px;
   }
 
@@ -1813,11 +1309,9 @@ label[for="focus-sound"],
 
   #focus-minutes-group #minute-help {
     margin-bottom: 34px;
-  }
-}
+  }}
 
 
-/* 第24版：日本語・英語切り替え */
 .language-settings {
   margin-top: 22px;
   padding-top: 20px;
@@ -1877,10 +1371,7 @@ body.language-en .subtitle {
   letter-spacing: 0;
 }
 
-body.language-en .field-label,
-body.language-en .toggle-text strong,
-body.language-en .toggle-text small,
-body.language-en .help-text {
+body.language-en .field-label, body.language-en .help-text{
   overflow-wrap: anywhere;
 }
 
@@ -1907,8 +1398,7 @@ body.language-en .bottom-sheet {
   overflow-y: auto;
 }
 
-@media (max-width: 430px) {
-  body.language-en .app-header h1 {
+@media (max-width: 430px) {body.language-en .app-header h1 {
     font-size: 1.55rem;
   }
 
@@ -1925,8 +1415,7 @@ body.language-en .bottom-sheet {
     font-size: 0.91rem;
   }
 
-  body.language-en .help-text,
-  body.language-en .toggle-text small {
+  body.language-en .help-text{
     font-size: 0.72rem;
   }
 
@@ -1936,11 +1425,9 @@ body.language-en .bottom-sheet {
 
   body.language-en .theme-option {
     padding-inline: 9px;
-  }
-}
+  }}
 
 
-/* 第25版：英語表示時の下部余白を圧縮 */
 body.language-en #setup-screen .setting-group:last-child {
   margin-bottom: 0;
 }
@@ -1951,8 +1438,7 @@ body.language-en #setup-screen .help-text.compact {
   line-height: 1.25;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  body.language-en #setup-screen {
+@media (max-width: 430px) and (max-height: 900px) {body.language-en #setup-screen {
     gap: 8px;
   }
 
@@ -1967,11 +1453,9 @@ body.language-en #setup-screen .help-text.compact {
   body.language-en #setup-screen .help-text.compact {
     margin: 4px 0 0;
     line-height: 1.2;
-  }
-}
+  }}
 
 
-/* 第27版：英語表示時のみ設定下部の位置と余白を調整 */
 body.language-en #minute-help {
   margin-bottom: 18px;
 }
@@ -1984,8 +1468,7 @@ body.language-en #setup-screen .card {
   padding-bottom: 16px;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  body.language-en #minute-help {
+@media (max-width: 430px) and (max-height: 900px) {body.language-en #minute-help {
     margin-bottom: 16px;
   }
 
@@ -1995,13 +1478,9 @@ body.language-en #setup-screen .card {
 
   body.language-en #setup-screen .card {
     padding-bottom: 14px;
-  }
-}
+  }}
 
 
-/* 第28版：ナチュラルベージュをスカイブルーへ、ピンクベージュをダークへ置換 */
-
-/* スカイブルーを標準テーマとして使用 */
 :root,
 body[data-theme="sky"] {
   --theme-bg-top: #f8fcff;
@@ -2038,20 +1517,6 @@ body[data-theme="dark"] {
   color-scheme: dark;
 }
 
-.theme-preview-sky {
-  background: #e6f2ff !important;
-}
-.theme-preview-sky span {
-  background: #5ba7e6 !important;
-}
-
-.theme-preview-dark {
-  background: #1b1e24 !important;
-  border-color: #46515e !important;
-}
-.theme-preview-dark span {
-  background: #4dd0c5 !important;
-}
 
 body[data-theme="dark"]:not(.dim-mode) select,
 body[data-theme="dark"]:not(.dim-mode) input,
@@ -2085,25 +1550,14 @@ body[data-theme="dark"]:not(.dim-mode) .language-option[aria-checked="true"] {
   border-color: var(--theme-accent);
 }
 
-/* 旧テーマ用の装飾指定を無効化 */
-body[data-theme="sky"] .decor-flowers,
-body[data-theme="sky"] .decor-leaves,
-body[data-theme="dark"] .decor-flowers,
-body[data-theme="dark"] .decor-leaves {
-  opacity: 0;
-}
 
-
-/* 第30版：タイマー画面、背景グラデーション、タイトルフォント */
-
-/* タイトルだけKlee One */
 .app-header h1 {
   font-family: "Klee One", "Hiragino Maru Gothic ProN", "Yu Gothic", sans-serif;
   font-weight: 600;
   letter-spacing: 0.03em;
 }
 
-/* タイマー画面を設定画面と同様に、カード＋外側ボタンで構成 */
+
 #timer-screen {
   display: flex;
   flex-direction: column;
@@ -2143,26 +1597,25 @@ body[data-theme="dark"] .decor-leaves {
   border-radius: 24px;
 }
 
-/* 省画面モードでは外側の操作部品も非表示 */
+
 body.dim-mode #timer-screen > .timer-controls,
 body.dim-mode #timer-screen > .timer-alert-note {
   display: none !important;
 }
 
-/* スカイブルー：ラベンダーと同じく上下差を感じるグラデーション */
+
 body[data-theme="sky"] {
   --theme-bg-top: #f9fdff;
   --theme-bg-bottom: #dceeff;
 }
 
-/* ミントグリーン：ラベンダーと同じく上下差を感じるグラデーション */
+
 body[data-theme="mint"] {
   --theme-bg-top: #fbfffd;
   --theme-bg-bottom: #dff3eb;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #timer-screen {
+@media (max-width: 430px) and (max-height: 900px) {#timer-screen {
     gap: 12px;
   }
 
@@ -2181,13 +1634,9 @@ body[data-theme="mint"] {
     min-height: 54px;
     border-radius: 22px;
     font-size: 1.25rem;
-  }
-}
+  }}
 
 
-/* 第31版：背景グラデーションとタイマー操作ボタンを再調整 */
-
-/* 白から始まるグラデーション */
 body[data-theme="sky"] {
   --theme-bg-top: #ffffff;
   --theme-bg-bottom: #dceeff;
@@ -2198,7 +1647,7 @@ body[data-theme="mint"] {
   --theme-bg-bottom: #dff3eb;
 }
 
-/* 初期設定画面のスタートボタンと完全に揃える */
+
 #timer-screen > #running-controls,
 #timer-screen > #paused-controls {
   width: min(82%, 310px);
@@ -2216,19 +1665,18 @@ body[data-theme="mint"] {
   line-height: 1.2;
 }
 
-/* リセットも同じ大きさと丸みにする */
+
 #timer-screen > #paused-controls #reset-button {
   min-height: 56px;
   border-radius: 999px;
 }
 
-/* タイマーカードの角丸も設定カードと同じ値に固定 */
+
 #timer-screen .timer-card {
   border-radius: 18px;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #timer-screen > #running-controls,
+@media (max-width: 430px) and (max-height: 900px) {#timer-screen > #running-controls,
   #timer-screen > #paused-controls {
     width: min(80%, 292px);
   }
@@ -2239,13 +1687,9 @@ body[data-theme="mint"] {
     min-height: 54px;
     border-radius: 999px;
     padding-inline: 24px;
-  }
-}
+  }}
 
 
-/* 第32版：大人かわいい4テーマへ刷新 */
-
-/* 1. パウダースカイ（初期値） */
 :root,
 body[data-theme="powder-sky"] {
   --theme-bg-top: #ffffff;
@@ -2270,7 +1714,7 @@ body[data-theme="powder-sky"] {
   --timer-ring-track-dim: rgba(164, 191, 220, 0.18);
 }
 
-/* 2. ミスティラベンダー */
+
 body[data-theme="misty-lavender"] {
   --theme-bg-top: #ffffff;
   --theme-bg-bottom: #eee9f3;
@@ -2294,7 +1738,7 @@ body[data-theme="misty-lavender"] {
   --timer-ring-track-dim: rgba(188, 166, 202, 0.18);
 }
 
-/* 3. セージグレージュ */
+
 body[data-theme="sage-greige"] {
   --theme-bg-top: #ffffff;
   --theme-bg-bottom: #ecebe5;
@@ -2318,7 +1762,7 @@ body[data-theme="sage-greige"] {
   --timer-ring-track-dim: rgba(183, 187, 161, 0.18);
 }
 
-/* 4. スモーキーローズ */
+
 body[data-theme="smoky-rose"] {
   --theme-bg-top: #ffffff;
   --theme-bg-bottom: #f3e8e7;
@@ -2371,7 +1815,6 @@ body[data-theme="smoky-rose"] {
 }
 
 
-/* 第33版：身体チェック記録・エクスポート */
 .history-settings {
   margin-top: 22px;
   padding-top: 20px;
@@ -2487,8 +1930,7 @@ body.body-check-open {
   overflow: hidden;
 }
 
-@media (max-width: 430px) and (max-height: 760px) {
-  .body-check-dialog {
+@media (max-width: 430px) and (max-height: 760px) {.body-check-dialog {
     padding: 22px 18px 18px;
   }
 
@@ -2498,11 +1940,9 @@ body.body-check-open {
 
   .body-check-answer {
     min-height: 48px;
-  }
-}
+  }}
 
 
-/* 第35版：質問表示中も休憩カウントを明示 */
 .body-check-break-status {
   display: flex;
   align-items: center;
@@ -2537,7 +1977,6 @@ body.dim-mode .timer-ring-stop-end {
 }
 
 
-/* 第45版：第43版を基準に、一時停止中の操作ボタンのみ横並び */
 #timer-screen > #paused-controls {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: stretch;
@@ -2549,9 +1988,6 @@ body.dim-mode .timer-ring-stop-end {
 }
 
 
-/* 第46版：トップ装飾削除後の操作ボタンとプルダウン矢印調整 */
-
-/* トップのスタートと、集中中・休憩中の操作ボタンの高さ・角丸を統一 */
 .setup-start-button,
 #timer-screen > #running-controls .timer-action-button,
 #timer-screen > #paused-controls .timer-action-button,
@@ -2560,14 +1996,14 @@ body.dim-mode .timer-ring-stop-end {
   border-radius: 24px;
 }
 
-/* 一時停止中の2ボタンは横並びのまま、トップのスタートと同じ全体幅 */
+
 #timer-screen > #paused-controls {
   width: min(82%, 310px);
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 
-/* iOSの標準矢印位置差を避け、右端に固定した独自矢印を表示 */
+
 .sound-row select {
   -webkit-appearance: none;
   appearance: none;
@@ -2580,8 +2016,7 @@ body.dim-mode .timer-ring-stop-end {
   background-size: 14px 8px;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  .setup-start-button,
+@media (max-width: 430px) and (max-height: 900px) {.setup-start-button,
   #timer-screen > #running-controls .timer-action-button,
   #timer-screen > #paused-controls .timer-action-button,
   #timer-screen > #paused-controls #reset-button {
@@ -2597,13 +2032,9 @@ body.dim-mode .timer-ring-stop-end {
   .sound-row select {
     padding-right: 38px;
     background-position: right 12px center;
-  }
-}
+  }}
 
 
-/* 第47版：時計SVG復元・ボタン角丸統一・トップ画面の余白調整 */
-
-/* 集中中・休憩中の下部ボタンをトップのスタートと同じ丸みに統一 */
 .setup-start-button,
 #timer-screen > #running-controls .timer-action-button,
 #timer-screen > #paused-controls .timer-action-button,
@@ -2611,7 +2042,7 @@ body.dim-mode .timer-ring-stop-end {
   border-radius: 999px;
 }
 
-/* トップ画面は残り高さを使い、スタートをタイマー画面の操作位置まで下げる */
+
 #setup-screen {
   flex: 1 1 auto;
   min-height: 0;
@@ -2625,7 +2056,7 @@ body.dim-mode .timer-ring-stop-end {
   margin-top: auto;
 }
 
-/* タイマー設定カード内の余白を広げて見やすくする */
+
 #setup-screen .card {
   padding: 30px 24px 26px;
 }
@@ -2651,12 +2082,8 @@ body.dim-mode .timer-ring-stop-end {
   gap: 12px;
 }
 
-#setup-screen .toggle-row {
-  padding: 14px 16px;
-}
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen {
+@media (max-width: 430px) and (max-height: 900px) {#setup-screen {
     flex: 1 1 auto;
     min-height: 0;
   }
@@ -2691,21 +2118,17 @@ body.dim-mode .timer-ring-stop-end {
     gap: 10px;
   }
 
-  #setup-screen .toggle-row {
-    padding: 11px 13px;
-  }
+  
 
   .setup-start-button,
   #timer-screen > #running-controls .timer-action-button,
   #timer-screen > #paused-controls .timer-action-button,
   #timer-screen > #paused-controls #reset-button {
     border-radius: 999px;
-  }
-}
+  }}
 
-/* 高さが小さい場合のみ、カード余白を少し戻して一画面を維持 */
-@media (max-width: 430px) and (max-height: 800px) {
-  #setup-screen .card {
+
+@media (max-width: 430px) and (max-height: 800px) {#setup-screen .card {
     padding: 18px 18px 16px;
   }
 
@@ -2719,20 +2142,16 @@ body.dim-mode .timer-ring-stop-end {
 
   #setup-screen .setting-group {
     margin-bottom: 14px;
-  }
-}
+  }}
 
 
-/* 第48版：トップとタイマー画面の下部ボタン位置を統一 */
-
-/* 同じヘッダー下の利用可能な高さを、両画面で共通化 */
 #setup-screen,
 #timer-screen {
   flex: 1 1 auto;
   min-height: 0;
 }
 
-/* トップのスタートとタイマー画面の操作部を同じ下端位置へ配置 */
+
 #setup-screen #start-button,
 #timer-screen > #running-controls,
 #timer-screen > #paused-controls,
@@ -2740,9 +2159,8 @@ body.dim-mode .timer-ring-stop-end {
   margin-top: auto;
 }
 
-/* タイマー設定枠が収まりにくい高さでは、枠内の余白だけを調整 */
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen .card {
+
+@media (max-width: 430px) and (max-height: 900px) {#setup-screen .card {
     padding: 20px 20px 18px;
   }
 
@@ -2757,15 +2175,9 @@ body.dim-mode .timer-ring-stop-end {
 
   #setup-screen .setting-group {
     margin-bottom: 16px;
-  }
+  }}
 
-  #setup-screen .toggle-row {
-    padding: 10px 12px;
-  }
-}
-
-@media (max-width: 430px) and (max-height: 820px) {
-  #setup-screen .card {
+@media (max-width: 430px) and (max-height: 820px) {#setup-screen .card {
     padding: 16px 18px 14px;
   }
 
@@ -2784,17 +2196,9 @@ body.dim-mode .timer-ring-stop-end {
 
   #setup-screen .setting-group {
     margin-bottom: 11px;
-  }
-
-  #setup-screen .toggle-row {
-    padding: 8px 11px;
-  }
-}
+  }}
 
 
-/* 第49版：タイマー画面下部の余白を整理し、ボタン位置をトップと統一 */
-
-/* タイマーカード内の下部情報を詰める */
 #timer-screen .cycle-display {
   margin-bottom: 8px;
 }
@@ -2803,21 +2207,20 @@ body.dim-mode .timer-ring-stop-end {
   margin: 0;
 }
 
-/* タイマーカードの上下余白を同じ値に揃える */
+
 #timer-screen .timer-card {
   padding-top: 28px;
   padding-bottom: 28px;
 }
 
-/* ボタンはトップ画面と同じ下端位置へ */
+
 #timer-screen > #running-controls,
 #timer-screen > #paused-controls,
 #timer-screen > #alert-controls {
   margin-top: auto;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #timer-screen .cycle-display {
+@media (max-width: 430px) and (max-height: 900px) {#timer-screen .cycle-display {
     margin-bottom: 6px;
   }
 
@@ -2828,115 +2231,9 @@ body.dim-mode .timer-ring-stop-end {
   #timer-screen .timer-card {
     padding-top: 24px;
     padding-bottom: 24px;
-  }
-}
+  }}
 
 
-/* 第50版：集中時間を常設ホイール式へ変更 */
-.minute-wheel-wrap {
-  position: relative;
-  width: 100%;
-  height: 132px;
-  display: grid;
-  grid-template-columns: 1fr 44px;
-  align-items: center;
-  overflow: hidden;
-  border: 1px solid #d9e0e4;
-  border-radius: 18px;
-  background: #ffffff;
-}
-
-.minute-wheel {
-  height: 132px;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  scroll-snap-type: y mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  padding-block: 44px;
-  outline: none;
-  touch-action: pan-y;
-}
-
-.minute-wheel::-webkit-scrollbar {
-  display: none;
-}
-
-.minute-wheel-option {
-  height: 44px;
-  display: grid;
-  place-items: center;
-  scroll-snap-align: center;
-  color: #9aa4ad;
-  font-size: 1.15rem;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-  transition:
-    color 0.15s ease,
-    font-size 0.15s ease,
-    font-weight 0.15s ease,
-    opacity 0.15s ease;
-}
-
-.minute-wheel-option.is-selected {
-  color: #1f2933;
-  font-size: 1.9rem;
-  font-weight: 700;
-}
-
-.minute-wheel-selection {
-  position: absolute;
-  left: 12px;
-  right: 48px;
-  top: 44px;
-  height: 44px;
-  border-top: 1px solid var(--theme-border);
-  border-bottom: 1px solid var(--theme-border);
-  background: var(--theme-surface-soft);
-  opacity: 0.52;
-  pointer-events: none;
-}
-
-.minute-wheel-unit {
-  position: relative;
-  z-index: 2;
-  grid-column: 2;
-  grid-row: 1;
-  display: grid;
-  place-items: center start;
-  color: #62707d;
-  font-weight: 700;
-  pointer-events: none;
-}
-
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen .minute-wheel-wrap {
-    height: 114px;
-    border-radius: 15px;
-  }
-
-  #setup-screen .minute-wheel {
-    height: 114px;
-    padding-block: 38px;
-  }
-
-  #setup-screen .minute-wheel-option {
-    height: 38px;
-    font-size: 1rem;
-  }
-
-  #setup-screen .minute-wheel-option.is-selected {
-    font-size: 1.65rem;
-  }
-
-  #setup-screen .minute-wheel-selection {
-    top: 38px;
-    height: 38px;
-  }
-}
-
-
-/* 第51版：時間・分の2ホイールと選択値の視認性改善 */
 .duration-wheel-wrap {
   position: relative;
   width: 100%;
@@ -3008,26 +2305,8 @@ body.dim-mode .timer-ring-stop-end {
   pointer-events: none;
 }
 
-.duration-wheel-selection {
-  position: absolute;
-  z-index: 1;
-  left: 10px;
-  right: 10px;
-  top: 44px;
-  height: 44px;
-  border-top: 1px solid var(--theme-border);
-  border-bottom: 1px solid var(--theme-border);
-  background: var(--theme-surface-soft);
-  pointer-events: none;
-}
 
-/* 第50版の単一ホイールは非表示 */
-.minute-wheel-wrap {
-  display: none;
-}
-
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen .duration-wheel-wrap {
+@media (max-width: 430px) and (max-height: 900px) {#setup-screen .duration-wheel-wrap {
     height: 114px;
     gap: 6px;
     border-radius: 15px;
@@ -3052,18 +2331,13 @@ body.dim-mode .timer-ring-stop-end {
     font-weight: 800;
   }
 
-  #setup-screen .duration-wheel-selection {
-    top: 38px;
-    height: 38px;
-  }
+  
 
   #setup-screen .duration-wheel-unit {
     font-size: 0.82rem;
-  }
-}
+  }}
 
 
-/* 第52版：時間・分ホイールの中央選択値を同じ強さで表示 */
 .duration-wheel-option.is-selected,
 .duration-wheel-option[aria-selected="true"],
 #focus-hour-wheel .duration-wheel-option.is-selected,
@@ -3083,17 +2357,14 @@ body.dim-mode .timer-ring-stop-end {
   font-size: 1.95rem !important;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #focus-hour-wheel .duration-wheel-option.is-selected,
+@media (max-width: 430px) and (max-height: 900px) {#focus-hour-wheel .duration-wheel-option.is-selected,
   #focus-hour-wheel .duration-wheel-option[aria-selected="true"],
   #focus-minute-wheel .duration-wheel-option.is-selected,
   #focus-minute-wheel .duration-wheel-option[aria-selected="true"] {
     font-size: 1.7rem !important;
-  }
-}
+  }}
 
 
-/* 第54版：数字枠のみ・単位は枠外・選択帯なし */
 .duration-wheel-wrap {
   height: 132px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3136,10 +2407,6 @@ body.dim-mode .timer-ring-stop-end {
   text-align: left;
 }
 
-/* 選択中の網掛け・上下罫線は使用しない */
-.duration-wheel-selection {
-  display: none !important;
-}
 
 .duration-wheel-option.is-selected,
 .duration-wheel-option[aria-selected="true"],
@@ -3152,8 +2419,7 @@ body.dim-mode .timer-ring-stop-end {
   box-shadow: none !important;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen .duration-wheel-wrap {
+@media (max-width: 430px) and (max-height: 900px) {#setup-screen .duration-wheel-wrap {
     height: 114px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
@@ -3173,20 +2439,16 @@ body.dim-mode .timer-ring-stop-end {
   #setup-screen .duration-wheel-unit {
     min-width: 2.2em;
     font-size: 0.82rem;
-  }
-}
+  }}
 
 
-/* 第55版：集中時間枠線とプルダウン矢印の修正 */
-
-/* 集中時間の数字枠は輪郭線なし */
 .duration-wheel-frame,
 #setup-screen .duration-wheel-frame {
   border: 0 !important;
   box-shadow: none !important;
 }
 
-/* アラート音・集中中の音のプルダウン矢印を枠内右端へ固定 */
+
 #alert-sound,
 #focus-sound {
   -webkit-appearance: none !important;
@@ -3200,16 +2462,13 @@ body.dim-mode .timer-ring-stop-end {
   background-size: 14px 8px !important;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #alert-sound,
+@media (max-width: 430px) and (max-height: 900px) {#alert-sound,
   #focus-sound {
     padding-right: 38px !important;
     background-position: right 12px center !important;
-  }
-}
+  }}
 
 
-/* 第56版：試聴ボタンをスピーカー／停止アイコンへ変更 */
 .sound-row {
   grid-template-columns: minmax(0, 1fr) 54px;
 }
@@ -3255,8 +2514,7 @@ body.dim-mode .timer-ring-stop-end {
   color: #24313b;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  .sound-row {
+@media (max-width: 430px) and (max-height: 900px) {.sound-row {
     grid-template-columns: minmax(0, 1fr) 50px;
   }
 
@@ -3268,13 +2526,9 @@ body.dim-mode .timer-ring-stop-end {
   .preview-icon {
     width: 22px;
     height: 22px;
-  }
-}
+  }}
 
 
-/* 第57版：停止アイコンの塗りつぶしと音設定欄の中央揃え */
-
-/* 再生中の停止アイコンは塗りつぶし表示 */
 .preview-icon-stop {
   fill: currentColor !important;
   stroke: none !important;
@@ -3285,31 +2539,26 @@ body.dim-mode .timer-ring-stop-end {
   stroke: none !important;
 }
 
-/* プルダウン＋アイコンを、左右同じ余白で中央配置 */
+
 .setting-group .sound-row {
   width: calc(100% - 24px);
   margin-left: auto;
   margin-right: auto;
 }
 
-/* 説明文の開始位置をプルダウンの左端に合わせる */
+
 .setting-group .sound-row + .help-text {
   width: calc(100% - 24px);
   margin-left: auto;
   margin-right: auto;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen .setting-group .sound-row,
+@media (max-width: 430px) and (max-height: 900px) {#setup-screen .setting-group .sound-row,
   #setup-screen .setting-group .sound-row + .help-text {
     width: calc(100% - 20px);
-  }
-}
+  }}
 
 
-/* 第58版：音設定欄を確実に中央配置し、説明文をプルダウン左端へ揃える */
-
-/* 行と説明文を同じ親要素にまとめ、同じ幅・同じ開始位置に固定 */
 .sound-control-block {
   width: min(100%, 330px);
   margin-left: auto;
@@ -3329,13 +2578,13 @@ body.dim-mode .timer-ring-stop-end {
   text-align: left;
 }
 
-/* 第57版の幅指定を打ち消す */
+
 .setting-group .sound-row,
 .setting-group .sound-row + .help-text {
   width: auto;
 }
 
-/* アラート音は再生中も常にスピーカー表示 */
+
 .alert-preview-button.is-playing .preview-icon-speaker {
   display: block !important;
 }
@@ -3344,20 +2593,15 @@ body.dim-mode .timer-ring-stop-end {
   display: none !important;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen .sound-control-block {
+@media (max-width: 430px) and (max-height: 900px) {#setup-screen .sound-control-block {
     width: min(100%, 318px);
   }
 
   #setup-screen .sound-control-block .sound-row {
     grid-template-columns: minmax(0, 1fr) 50px;
-  }
-}
+  }}
 
 
-/* 第59版：集中時間ブロックの開始位置統一とスピーカー形状調整 */
-
-/* 音設定ブロックと同じ幅・同じ左端で中央配置 */
 .duration-control-block {
   width: min(100%, 330px);
   margin-left: auto;
@@ -3377,7 +2621,7 @@ body.dim-mode .timer-ring-stop-end {
   text-align: left;
 }
 
-/* スピーカーアイコンを少し縦長に */
+
 .preview-icon-speaker {
   width: 24px;
   height: 28px;
@@ -3385,8 +2629,7 @@ body.dim-mode .timer-ring-stop-end {
   transform-origin: center;
 }
 
-@media (max-width: 430px) and (max-height: 900px) {
-  #setup-screen .duration-control-block {
+@media (max-width: 430px) and (max-height: 900px) {#setup-screen .duration-control-block {
     width: min(100%, 318px);
   }
 
@@ -3394,5 +2637,4 @@ body.dim-mode .timer-ring-stop-end {
     width: 22px;
     height: 26px;
     transform: scaleY(1.08);
-  }
-}
+  }}

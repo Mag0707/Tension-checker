@@ -24,8 +24,6 @@
       timerSettings: "タイマー設定",
       changeTheme: "デザインテーマと言語を変更",
       focusDuration: "集中時間",
-      decreaseMinute: "集中時間を1分減らす",
-      increaseMinute: "集中時間を1分増やす",
       hoursUnit: "時間",
       minutesUnit: "分",
       minuteHelp: "2時間まで分単位で指定できます。休憩は5分固定です。",
@@ -36,15 +34,9 @@
       preview: "試聴",
       stopPreview: "停止",
       alertHelp: "集中終了時は、約2秒のアラートを2回鳴らします。",
-      breakEndSameSound: "休憩終了時にも同じ音を鳴らす",
-      breakEndHelp: "約2秒鳴った後、次の集中時間を始めます。",
       focusSound: "集中中の音",
-      silent: "無音",
-      softTick: "小さな時計音",
-      softBreeze: "やわらかな風音",
       gentleRain: "やさしい雨",
       cafeAmbience: "カフェの環境音",
-      quietStorm: "遠い雷を含まない静かな嵐",
       focusSoundHelp: "休憩中と一時停止中は必ず無音になります。",
       start: "スタート",
       pause: "一時停止",
@@ -121,8 +113,6 @@
       timerSettings: "Timer Settings",
       changeTheme: "Change design theme and language",
       focusDuration: "Focus Duration",
-      decreaseMinute: "Decrease focus duration by one minute",
-      increaseMinute: "Increase focus duration by one minute",
       hoursUnit: "hr",
       minutesUnit: "min",
       minuteHelp: "Choose 1–120 minutes. Breaks are fixed at 5 minutes.",
@@ -133,15 +123,9 @@
       preview: "Preview",
       stopPreview: "Stop",
       alertHelp: "Plays for about 2 seconds when focus time ends.",
-      breakEndSameSound: "Play the same sound when the break ends",
-      breakEndHelp: "The next focus session starts after the 2-second alert.",
       focusSound: "Sound During Focus",
-      silent: "Silent",
-      softTick: "Soft Clock Tick",
-      softBreeze: "Gentle Breeze",
       gentleRain: "Gentle Rain",
       cafeAmbience: "Café Ambience",
-      quietStorm: "Quiet Storm Without Thunder",
       focusSoundHelp: "Sound is always off during breaks and while paused.",
       start: "Start",
       pause: "Pause",
@@ -226,7 +210,6 @@
   const focusMinutesInput = document.getElementById("focus-minutes");
   const alertSoundSelect = document.getElementById("alert-sound");
   const focusSoundSelect = document.getElementById("focus-sound");
-  const breakEndAlertCheckbox = document.getElementById("break-end-alert");
   const themeSettingsButton = document.getElementById("theme-settings-button");
   const themeSheet = document.getElementById("theme-sheet");
   const themeOverlay = document.getElementById("theme-overlay");
@@ -1512,7 +1495,6 @@
       focusMinutes: clampFocusMinutes(focusMinutesInput.value),
       alertSound: alertSoundSelect.value,
       focusSound: focusSoundSelect.value,
-      breakEndAlert: true,
       theme: selectedTheme,
       language: selectedLanguage
     };
@@ -1546,7 +1528,6 @@
         focusSoundSelect.value = savedFocusSound;
       }
 
-      breakEndAlertCheckbox.checked = true;
       applyTheme(settings.theme ?? "powder-sky");
       applyLanguage(settings.language ?? "ja", false);
     } catch (_) {
@@ -1793,14 +1774,7 @@
       closeBodyCheck();
     }
 
-    if (breakEndAlertCheckbox.checked) {
-      beginAlert("focus");
-      return;
-    }
-
-    phase = "focus";
-    cycle += 1;
-    beginCountdown(focusSeconds);
+    beginAlert("focus");
   }
 
   function beginAlert(nextPhase) {

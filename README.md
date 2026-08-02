@@ -604,3 +604,30 @@ Version 41 updates the timer screen design as follows.
 - Matched its width to the sound-control blocks
 - Aligned the duration block's left edge with the alert-sound select
 - Made the speaker icon slightly taller without changing the button size
+
+
+## 第60版：不要コードの整理
+
+動作を変えず、これまでの改修で不要になったコードを整理しました。
+
+- 旧「手入力＋／−」集中時間UIのCSSを削除
+- 第50版の単一ホイール用CSSを削除
+- 既に削除済みの休憩終了アラート切替UIのHTML・CSS・JavaScriptを削除
+- 休憩終了アラートは、条件分岐を介さず常に再生する処理へ簡略化
+- 旧装飾テーマや旧カラープレビューなど、現在使われていないCSSを削除
+- 使用されていない翻訳キーを削除
+- 累積していた版別コメントを本番CSSから削除
+- 現在使用中のホイール、音声、身体チェック、履歴、テーマ、言語、PWA機能は維持
+
+---
+
+## Version 60: Code Cleanup
+
+- Removed CSS for the obsolete manual plus/minus duration control
+- Removed CSS for the obsolete single-wheel duration selector
+- Removed the retired break-end alert toggle from HTML, CSS, and JavaScript
+- Simplified break completion so the alert always plays
+- Removed unused decorative and legacy theme CSS
+- Removed unused translation keys
+- Removed accumulated version-history comments from production CSS
+- Preserved all current timer, audio, body-check, history, theme, language, and PWA behavior
