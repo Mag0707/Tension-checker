@@ -248,6 +248,7 @@
 
   const phaseLabel = document.getElementById("phase-label");
   const timeDisplay = document.getElementById("time-display");
+  const timerRingProgress = document.getElementById("timer-ring-progress");
   const checkMessage = document.getElementById("check-message");
   const cycleDisplay = document.getElementById("cycle-display");
   const restoreNotice = document.getElementById("restore-notice");
@@ -259,6 +260,9 @@
   const pauseButton = document.getElementById("pause-button");
   const resumeButton = document.getElementById("resume-button");
   const resetButton = document.getElementById("reset-button");
+
+  const TIMER_RING_RADIUS = 96;
+  const TIMER_RING_CIRCUMFERENCE = 2 * Math.PI * TIMER_RING_RADIUS;
 
   let focusSeconds = 25 * 60;
   let remainingSeconds = focusSeconds;
@@ -1213,13 +1217,80 @@
     focusMinutesInput.value = clampFocusMinutes(value);
   }
 
-  function formatTime(totalSeconds) {
+  function getTimeParts(totalSeconds) {
     const safeSeconds = Math.max(0, totalSeconds);
     const minutes = Math.floor(safeSeconds / 60);
     const seconds = safeSeconds % 60;
 
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    return {
+      minutes: String(minutes).padStart(2, "0"),
+      seconds: String(seconds).padStart(2, "0"),
+      minuteNumber: minutes,
+      secondNumber: seconds
+    };
   }
+
+  function formatCompactTime(totalSeconds) {
+    const { minutes, seconds } = getTimeParts(totalSeconds);
+    return `${minutes} m ${seconds} s`;
+  }
+
+  function getTimeAriaLabel(totalSeconds) {
+    const { minuteNumber, secondNumber } = getTimeParts(totalSeconds);
+
+    if (selectedLanguage === "en") {
+      return `${minuteNumber} minutes ${secondNumber} seconds`;
+    }
+
+    return `${minuteNumber}分${secondNumber}秒`;
+  }
+
+  function setTimeDisplay(totalSeconds) {
+    const { minutes, seconds } = getTimeParts(totalSeconds);
+
+    timeDisplay.innerHTML = `
+      <span class="time-part"><span class="time-value">${minutes}</span><span class="time-unit">m</span></span>
+      <span class="time-part"><span class="time-value">${seconds}</span><span class="time-unit">s</span></span>
+    `.trim();
+    timeDisplay.setAttribute("aria-label", getTimeAriaLabel(totalSeconds));
+  }
+
+  function getRingPhaseTotalSeconds() {
+    if (phase === "focus") {
+      return focusSeconds;
+    }
+
+    if (phase === "break") {
+      return BREAK_SECONDS;
+    }
+
+    return 0;
+  }
+
+  function getInitialRingFraction(totalSeconds) {
+    if (totalSeconds >= 3600 || totalSeconds % 3600 === 0) {
+      return 1;
+    }
+
+    return Math.min(1, Math.max(totalSeconds / 3600, 0));
+  }
+
+  function updateTimerRing(totalSeconds, currentSeconds) {
+    if (!timerRingProgress) {
+      return;
+    }
+
+    const clampedTotal = Math.max(1, totalSeconds);
+    const initialRingFraction = getInitialRingFraction(clampedTotal);
+    const currentFraction = Math.max(0, Math.min(1, currentSeconds / clampedTotal));
+    const visibleFraction = initialRingFraction * currentFraction;
+    const visibleLength = TIMER_RING_CIRCUMFERENCE * visibleFraction;
+
+    timerRingProgress.style.strokeDasharray = `${visibleLength} ${TIMER_RING_CIRCUMFERENCE}`;
+    timerRingProgress.style.strokeDashoffset = `${TIMER_RING_CIRCUMFERENCE - visibleLength}`;
+    timerRingProgress.style.opacity = visibleLength > 0.5 ? "1" : "0";
+  }
+
 
 
   function applyLanguage(language, shouldRefreshDisplay = true) {
@@ -1452,7 +1523,8 @@
       const movingToBreak = alertNextPhase === "break";
 
       phaseLabel.textContent = movingToBreak ? t("focusEnded") : t("breakEnded");
-      timeDisplay.textContent = "00:00";
+      setTimeDisplay(0);
+      updateTimerRing(phase === "focus" ? focusSeconds : BREAK_SECONDS, 0);
       checkMessage.textContent = movingToBreak
         ? t("afterAlertBreak")
         : t("afterAlertFocus");
@@ -1468,14 +1540,15 @@
         ? (isPaused ? t("phaseFocusPaused") : t("phaseFocus"))
         : (isPaused ? t("phaseBreakPaused") : t("phaseBreak"));
 
-    timeDisplay.textContent = formatTime(remainingSeconds);
+    setTimeDisplay(remainingSeconds);
+    updateTimerRing(getRingPhaseTotalSeconds(), remainingSeconds);
     cycleDisplay.textContent = t("cycle")(cycle);
 
     if (
       phase === "break" &&
       !bodyCheckOverlay.classList.contains("hidden")
     ) {
-      bodyCheckBreakTime.textContent = formatTime(remainingSeconds);
+      bodyCheckBreakTime.textContent = formatCompactTime(remainingSeconds);
     }
 
     const messages = phase === "focus" ? t("focusMessages") : t("breakMessages");

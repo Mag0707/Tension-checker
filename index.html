@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <title>過緊張チェックタイマー</title>
-  <link rel="stylesheet" href="style.css?v=40">
+  <link rel="stylesheet" href="style.css?v=41">
 </head>
 <body>
   <main class="app-shell">
@@ -117,7 +117,22 @@
       <div id="timer-card" class="timer-card">
         <div id="timer-content" class="timer-content shift-0">
           <p id="phase-label" class="phase-label">集中時間</p>
-          <p id="time-display" class="time-display" aria-live="polite">25:00</p>
+          <div class="timer-visual" aria-hidden="true">
+            <svg class="timer-ring" viewBox="0 0 240 240" focusable="false">
+              <defs>
+                <linearGradient id="timer-ring-gradient" x1="28" y1="30" x2="210" y2="210" gradientUnits="userSpaceOnUse">
+                  <stop class="timer-ring-stop-start" offset="0%"></stop>
+                  <stop class="timer-ring-stop-end" offset="100%"></stop>
+                </linearGradient>
+              </defs>
+              <circle class="timer-ring-track" cx="120" cy="120" r="96"></circle>
+              <circle id="timer-ring-progress" class="timer-ring-progress" cx="120" cy="120" r="96"></circle>
+            </svg>
+            <p id="time-display" class="time-display" aria-live="polite" aria-label="25分00秒">
+              <span class="time-part"><span class="time-value">25</span><span class="time-unit">m</span></span>
+              <span class="time-part"><span class="time-value">00</span><span class="time-unit">s</span></span>
+            </p>
+          </div>
           <p id="check-message" class="check-message">肩と顎の力を確認しましょう。</p>
           <p id="cycle-display" class="cycle-display">1セット目</p>
           <p id="wake-lock-status" class="wake-lock-status">画面消灯防止：未使用</p>
@@ -233,7 +248,7 @@
       <h2 id="body-check-title" data-i18n="bodyCheckTitle">身体をひとつ確認しましょう</h2>
       <div class="body-check-break-status">
         <span data-i18n="breakRemaining">休憩の残り時間</span>
-        <strong id="body-check-break-time">05:00</strong>
+        <strong id="body-check-break-time">05 m 00 s</strong>
       </div>
       <p id="body-check-instruction" class="body-check-instruction"></p>
       <p id="body-check-question" class="body-check-question"></p>
@@ -242,6 +257,6 @@
     </section>
   </div>
 
-  <script src="app.js?v=40"></script>
+  <script src="app.js?v=41"></script>
 </body>
 </html>

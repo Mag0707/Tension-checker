@@ -224,6 +224,44 @@ select {
   text-align: center;
 }
 
+.timer-visual {
+  position: relative;
+  width: min(76vw, 360px);
+  aspect-ratio: 1;
+  margin: 0 auto 18px;
+  display: grid;
+  place-items: center;
+}
+
+.timer-ring {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.timer-ring-track,
+.timer-ring-progress {
+  fill: none;
+  stroke-width: 10;
+}
+
+.timer-ring-track {
+  stroke: var(--timer-ring-track);
+}
+
+.timer-ring-progress {
+  stroke: url(#timer-ring-gradient);
+  stroke-linecap: round;
+}
+
+.timer-ring-stop-start {
+  stop-color: var(--timer-ring-start);
+}
+
+.timer-ring-stop-end {
+  stop-color: var(--timer-ring-end);
+}
+
 .phase-label {
   margin-bottom: 10px;
   font-size: 1.05rem;
@@ -232,12 +270,37 @@ select {
 }
 
 .time-display {
-  margin-bottom: 18px;
-  font-size: clamp(4rem, 22vw, 7rem);
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.24em;
+  padding-bottom: 0.08em;
+  font-size: clamp(3.6rem, 19vw, 6rem);
   font-weight: 750;
   line-height: 1;
   letter-spacing: -0.05em;
   font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.time-part {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.06em;
+}
+
+.time-value {
+  line-height: 1;
+}
+
+.time-unit {
+  font-size: 0.24em;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  transform: translateY(-0.18em);
 }
 
 .check-message {
@@ -2194,6 +2257,12 @@ body[data-theme="powder-sky"] {
   --theme-shadow: rgba(91, 119, 148, 0.12);
   --theme-decor: #a9bed4;
   --theme-decor-soft: #e5edf5;
+  --timer-ring-start: #b6cae0;
+  --timer-ring-end: #6a8fb9;
+  --timer-ring-track: #e5edf6;
+  --timer-ring-start-dim: #dbe9fa;
+  --timer-ring-end-dim: #92b6dd;
+  --timer-ring-track-dim: rgba(164, 191, 220, 0.18);
 }
 
 /* 2. ミスティラベンダー */
@@ -2212,6 +2281,12 @@ body[data-theme="misty-lavender"] {
   --theme-shadow: rgba(112, 91, 124, 0.12);
   --theme-decor: #bcaec6;
   --theme-decor-soft: #ece6f0;
+  --timer-ring-start: #c2b1ce;
+  --timer-ring-end: #866b96;
+  --timer-ring-track: #eee7f3;
+  --timer-ring-start-dim: #eadff1;
+  --timer-ring-end-dim: #b39ac4;
+  --timer-ring-track-dim: rgba(188, 166, 202, 0.18);
 }
 
 /* 3. セージグレージュ */
@@ -2230,6 +2305,12 @@ body[data-theme="sage-greige"] {
   --theme-shadow: rgba(102, 105, 89, 0.12);
   --theme-decor: #b4b8a1;
   --theme-decor-soft: #eceee5;
+  --timer-ring-start: #bdc1ac;
+  --timer-ring-end: #7d8369;
+  --timer-ring-track: #ecece4;
+  --timer-ring-start-dim: #e5e7db;
+  --timer-ring-end-dim: #a5ab8f;
+  --timer-ring-track-dim: rgba(183, 187, 161, 0.18);
 }
 
 /* 4. スモーキーローズ */
@@ -2248,6 +2329,12 @@ body[data-theme="smoky-rose"] {
   --theme-shadow: rgba(143, 83, 81, 0.12);
   --theme-decor: #d6a3a1;
   --theme-decor-soft: #f1e2e1;
+  --timer-ring-start: #dfb4b2;
+  --timer-ring-end: #b46d6b;
+  --timer-ring-track: #f4e8e7;
+  --timer-ring-start-dim: #f1d8d6;
+  --timer-ring-end-dim: #d4918f;
+  --timer-ring-track-dim: rgba(214, 163, 161, 0.18);
 }
 
 .theme-preview-powder-sky {
@@ -2429,4 +2516,17 @@ body.body-check-open {
   color: var(--theme-title);
   font-size: 1.2rem;
   letter-spacing: 0.04em;
+}
+
+
+body.dim-mode .timer-ring-track {
+  stroke: var(--timer-ring-track-dim);
+}
+
+body.dim-mode .timer-ring-stop-start {
+  stop-color: var(--timer-ring-start-dim);
+}
+
+body.dim-mode .timer-ring-stop-end {
+  stop-color: var(--timer-ring-end-dim);
 }

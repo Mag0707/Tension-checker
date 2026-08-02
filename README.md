@@ -240,3 +240,30 @@ Version 39 kept the focus BGM playing at `volume = 0` during breaks. Because the
 - Only Reset rewinds and discards the retained BGM element
 
 This replaces the volume-zero approach with a true pause during breaks.
+
+
+## 第41版：カウントダウン表示のデザイン変更
+
+第41版では、タイマー画面の見た目を次のように更新しました。
+
+- 数字の周囲にSVGのリングを追加
+- リングはテーマに合わせたグラデーション表示
+- 省画面モード（黒背景）でもリングが見えるよう、黒背景用のグラデーション色を別指定
+- リングは残り時間に応じて縮小
+- 60分以上または1時間単位の設定では12時位置から開始
+- 25分など1時間未満の設定では、終了時に12時位置へ到達する途中位置から開始
+- 時刻表示は `mm:ss` から `mm m ss s` 表記へ変更
+
+---
+
+## Version 41: Countdown Ring and Time Format
+
+Version 41 updates the timer screen design as follows.
+
+- Added an SVG countdown ring around the timer
+- The ring uses theme-based gradients
+- Separate gradient colors are applied in dim mode (black background)
+- The ring shrinks as the remaining time decreases
+- For 60 minutes or exact hour-based durations, the ring starts at 12 o'clock
+- For durations under 60 minutes, such as 25 minutes, the ring starts partway around the circle so that it finishes at 12 o'clock
+- The time display format changes from `mm:ss` to `mm m ss s`
