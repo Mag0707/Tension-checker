@@ -267,3 +267,26 @@ Version 41 updates the timer screen design as follows.
 - For 60 minutes or exact hour-based durations, the ring starts at 12 o'clock
 - For durations under 60 minutes, such as 25 minutes, the ring starts partway around the circle so that it finishes at 12 o'clock
 - The time display format changes from `mm:ss` to `mm m ss s`
+
+
+## 第42版：リング表示の位置・進行方向修正
+
+- 時間表示をリング中央へ配置
+- 数字がリングからはみ出しにくいよう文字サイズと横幅を調整
+- リングのグラデーションを、淡色ではなく濃い同系色同士へ変更
+- SVGリングの開始基準を12時位置へ修正
+- 25分では、時計の5時位置まで色がついた状態から開始
+- 残り時間が減るにつれてリングが反時計回りに縮み、0秒で12時位置へ戻る
+- 60分・120分など1時間単位では、12時位置から一周分のリングで開始
+
+---
+
+## Version 42: Ring Position and Countdown Direction
+
+- Centered the time display inside the SVG ring
+- Adjusted typography so the timer stays within the ring
+- Changed ring gradients to darker shades within each theme color
+- Corrected the SVG ring origin to the 12 o'clock position
+- A 25-minute timer begins with the arc ending at approximately 5 o'clock
+- The arc shrinks back toward 12 o'clock as time counts down
+- Exact hour durations such as 60 or 120 minutes begin with a full ring

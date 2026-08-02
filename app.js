@@ -1255,39 +1255,21 @@
     timeDisplay.setAttribute("aria-label", getTimeAriaLabel(totalSeconds));
   }
 
-  function getRingPhaseTotalSeconds() {
-    if (phase === "focus") {
-      return focusSeconds;
-    }
-
-    if (phase === "break") {
-      return BREAK_SECONDS;
-    }
-
-    return 0;
-  }
-
-  function getInitialRingFraction(totalSeconds) {
-    if (totalSeconds >= 3600 || totalSeconds % 3600 === 0) {
-      return 1;
-    }
-
-    return Math.min(1, Math.max(totalSeconds / 3600, 0));
-  }
-
-  function updateTimerRing(totalSeconds, currentSeconds) {
+  function updateTimerRing(currentSeconds) {
     if (!timerRingProgress) {
       return;
     }
 
-    const clampedTotal = Math.max(1, totalSeconds);
-    const initialRingFraction = getInitialRingFraction(clampedTotal);
-    const currentFraction = Math.max(0, Math.min(1, currentSeconds / clampedTotal));
-    const visibleFraction = initialRingFraction * currentFraction;
+    const safeSeconds = Math.max(0, currentSeconds);
+    const secondsWithinHour = safeSeconds % 3600;
+    const isExactHour = safeSeconds > 0 && secondsWithinHour === 0;
+    const visibleFraction = isExactHour
+      ? 1
+      : secondsWithinHour / 3600;
     const visibleLength = TIMER_RING_CIRCUMFERENCE * visibleFraction;
 
     timerRingProgress.style.strokeDasharray = `${visibleLength} ${TIMER_RING_CIRCUMFERENCE}`;
-    timerRingProgress.style.strokeDashoffset = `${TIMER_RING_CIRCUMFERENCE - visibleLength}`;
+    timerRingProgress.style.strokeDashoffset = "0";
     timerRingProgress.style.opacity = visibleLength > 0.5 ? "1" : "0";
   }
 
@@ -1524,7 +1506,7 @@
 
       phaseLabel.textContent = movingToBreak ? t("focusEnded") : t("breakEnded");
       setTimeDisplay(0);
-      updateTimerRing(phase === "focus" ? focusSeconds : BREAK_SECONDS, 0);
+      updateTimerRing(0);
       checkMessage.textContent = movingToBreak
         ? t("afterAlertBreak")
         : t("afterAlertFocus");
@@ -1541,7 +1523,7 @@
         : (isPaused ? t("phaseBreakPaused") : t("phaseBreak"));
 
     setTimeDisplay(remainingSeconds);
-    updateTimerRing(getRingPhaseTotalSeconds(), remainingSeconds);
+    updateTimerRing(remainingSeconds);
     cycleDisplay.textContent = t("cycle")(cycle);
 
     if (

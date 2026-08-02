@@ -252,6 +252,8 @@ select {
 .timer-ring-progress {
   stroke: url(#timer-ring-gradient);
   stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: 120px 120px;
 }
 
 .timer-ring-stop-start {
@@ -271,25 +273,28 @@ select {
 
 .time-display {
   position: absolute;
-  inset: 0;
+  left: 50%;
+  top: 50%;
+  width: 82%;
   margin: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-end;
-  gap: 0.24em;
-  padding-bottom: 0.08em;
-  font-size: clamp(3.6rem, 19vw, 6rem);
+  align-items: baseline;
+  gap: 0.22em;
+  transform: translate(-50%, -50%);
+  font-size: clamp(3rem, 15.5vw, 5rem);
   font-weight: 750;
   line-height: 1;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.045em;
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   pointer-events: none;
 }
 
 .time-part {
   display: inline-flex;
   align-items: baseline;
-  gap: 0.06em;
+  gap: 0.05em;
 }
 
 .time-value {
@@ -297,10 +302,10 @@ select {
 }
 
 .time-unit {
-  font-size: 0.24em;
+  font-size: 0.25em;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  transform: translateY(-0.18em);
+  letter-spacing: 0.05em;
+  transform: translateY(-0.08em);
 }
 
 .check-message {
@@ -2257,11 +2262,11 @@ body[data-theme="powder-sky"] {
   --theme-shadow: rgba(91, 119, 148, 0.12);
   --theme-decor: #a9bed4;
   --theme-decor-soft: #e5edf5;
-  --timer-ring-start: #b6cae0;
-  --timer-ring-end: #6a8fb9;
+  --timer-ring-start: #6f91b8;
+  --timer-ring-end: #3f6f9f;
   --timer-ring-track: #e5edf6;
-  --timer-ring-start-dim: #dbe9fa;
-  --timer-ring-end-dim: #92b6dd;
+  --timer-ring-start-dim: #8fb5dd;
+  --timer-ring-end-dim: #5d8fc2;
   --timer-ring-track-dim: rgba(164, 191, 220, 0.18);
 }
 
@@ -2281,11 +2286,11 @@ body[data-theme="misty-lavender"] {
   --theme-shadow: rgba(112, 91, 124, 0.12);
   --theme-decor: #bcaec6;
   --theme-decor-soft: #ece6f0;
-  --timer-ring-start: #c2b1ce;
-  --timer-ring-end: #866b96;
+  --timer-ring-start: #9578a7;
+  --timer-ring-end: #664b79;
   --timer-ring-track: #eee7f3;
-  --timer-ring-start-dim: #eadff1;
-  --timer-ring-end-dim: #b39ac4;
+  --timer-ring-start-dim: #b99dca;
+  --timer-ring-end-dim: #8a6da0;
   --timer-ring-track-dim: rgba(188, 166, 202, 0.18);
 }
 
@@ -2305,11 +2310,11 @@ body[data-theme="sage-greige"] {
   --theme-shadow: rgba(102, 105, 89, 0.12);
   --theme-decor: #b4b8a1;
   --theme-decor-soft: #eceee5;
-  --timer-ring-start: #bdc1ac;
-  --timer-ring-end: #7d8369;
+  --timer-ring-start: #8b9274;
+  --timer-ring-end: #626a4f;
   --timer-ring-track: #ecece4;
-  --timer-ring-start-dim: #e5e7db;
-  --timer-ring-end-dim: #a5ab8f;
+  --timer-ring-start-dim: #aeb596;
+  --timer-ring-end-dim: #7f8867;
   --timer-ring-track-dim: rgba(183, 187, 161, 0.18);
 }
 
@@ -2329,11 +2334,11 @@ body[data-theme="smoky-rose"] {
   --theme-shadow: rgba(143, 83, 81, 0.12);
   --theme-decor: #d6a3a1;
   --theme-decor-soft: #f1e2e1;
-  --timer-ring-start: #dfb4b2;
-  --timer-ring-end: #b46d6b;
+  --timer-ring-start: #bd7775;
+  --timer-ring-end: #914f4e;
   --timer-ring-track: #f4e8e7;
-  --timer-ring-start-dim: #f1d8d6;
-  --timer-ring-end-dim: #d4918f;
+  --timer-ring-start-dim: #d99693;
+  --timer-ring-end-dim: #b46462;
   --timer-ring-track-dim: rgba(214, 163, 161, 0.18);
 }
 
