@@ -348,3 +348,24 @@ Version 41 updates the timer screen design as follows.
 - Matched the height and corner radius of timer controls to the setup Start button
 - Kept paused Start and Reset buttons side by side
 - Replaced the inconsistent iOS native select arrow with a custom SVG arrow fixed to the right edge
+
+
+## 第47版：トップ画面と操作ボタンの再調整
+
+- トップの時計SVG画像を復元
+- 英字「TENSION CHECK TIMER」は削除したまま維持
+- 集中中・休憩中の下部ボタンを、トップのスタートボタンと同じ丸みに統一
+- トップ画面のスタートボタンを残り高さの下側へ配置
+- タイマー設定カード内の上下左右余白、項目間隔、説明文間隔を広げて見やすく調整
+- 高さが小さいPWA表示では、一画面に収まるよう余白を自動的に少し縮小
+
+---
+
+## Version 47: Restored Clock and Layout Refinements
+
+- Restored the clock SVG at the top
+- Kept the “TENSION CHECK TIMER” eyebrow removed
+- Matched the corner radius of focus and break controls to the setup Start button
+- Positioned the setup Start button lower using the remaining screen height
+- Increased spacing and padding inside the timer settings card
+- Added a compact fallback for shorter PWA screens
