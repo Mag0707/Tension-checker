@@ -311,3 +311,22 @@ Version 41 updates the timer screen design as follows.
 - The focus-end alert now plays twice before entering the break
 - The break and body-check dialog begin after the second alert finishes
 - Pending replay timers are cleared on reset or interruption
+
+
+## 第44版：PWAタイマー画面の高さ調整
+
+- 画面上部の英字「TENSION CHECK TIMER」を削除
+- iPhoneのPWA表示中だけ、タイマー画面を高さに合わせてコンパクト化
+- タイトル、説明文、リング、カード内余白、状態表示を縮小
+- 一時停止中も「スタート」「リセット」の両方が一画面内に収まるよう、操作ボタンの高さと間隔を調整
+- 設定画面のサイズには影響しないよう、タイマー表示中のみ専用クラスを適用
+
+---
+
+## Version 44: PWA Timer Screen Fit
+
+- Removed the upper “TENSION CHECK TIMER” eyebrow
+- Added a compact layout used only while the timer screen is open on iPhone-sized PWA displays
+- Reduced header, ring, card spacing, status text, and control sizes
+- Adjusted paused controls so both Start and Reset fit within one screen
+- The setup screen retains its existing layout
