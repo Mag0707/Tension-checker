@@ -388,3 +388,22 @@ Version 41 updates the timer screen design as follows.
 - Kept paused Start and Reset controls aligned to the same bottom position
 - On shorter screens, only spacing inside the settings card is reduced
 - Timer, typography, input, and button sizes remain unchanged
+
+
+## 第49版：タイマー画面の下部余白とボタン位置
+
+- 集中中・休憩中画面の「1セット目」と「画面消灯防止」の間隔を縮小
+- 「画面消灯防止」表示の下側余白を削除
+- タイマーカードの下部余白を上部余白と同じ値に統一
+- 余った高さを下部操作ボタンへ割り当て、トップ画面のスタートと同じ位置に合わせやすく調整
+- リング、文字、カード幅、ボタンサイズは変更なし
+
+---
+
+## Version 49: Timer Footer Spacing and Button Alignment
+
+- Reduced spacing between the cycle label and wake-lock status
+- Removed extra space below the wake-lock status
+- Matched the timer card's bottom padding to its top padding
+- Used the freed vertical space to align timer controls with the setup Start button
+- Ring, typography, card width, and button sizes remain unchanged
