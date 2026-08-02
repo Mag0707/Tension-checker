@@ -115,7 +115,7 @@
       focusDuration: "Focus Duration",
       hoursUnit: "hr",
       minutesUnit: "min",
-      minuteHelp: "Choose 1–120 minutes. Breaks are fixed at 5 minutes.",
+      minuteHelp: "Set by the minute, up to 2 hours. Breaks are fixed at 5 minutes.",
       focusEndAlert: "Focus-End Alert",
       softChime: "Soft Chime",
       bell: "Bell",

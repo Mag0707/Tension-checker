@@ -631,3 +631,26 @@ Version 41 updates the timer screen design as follows.
 - Removed unused translation keys
 - Removed accumulated version-history comments from production CSS
 - Preserved all current timer, audio, body-check, history, theme, language, and PWA behavior
+
+
+## 第61版：英語表示の説明文と音設定欄
+
+日本語表示は変更せず、英語表示のみ修正しました。
+
+- 集中時間の説明を「Set by the minute, up to 2 hours. Breaks are fixed at 5 minutes.」へ更新
+- 文字ボタン時代の英語専用ボタン幅指定を削除
+- 英語表示のスピーカーボタンを狭くし、Timer Settingsカード内に収まるよう調整
+- プルダウン左側とスピーカーボタン右側の外側余白が同じになるよう、音設定ブロック全体を中央配置
+- プルダウンが縮められるよう `min-width: 0` を明示
+- 日本語表示のレイアウト・文言・ボタン幅は変更なし
+
+---
+
+## Version 61: English Help Text and Sound-Control Layout
+
+- Updated the English duration help text
+- Removed obsolete English text-button sizing rules
+- Narrowed the speaker buttons in English mode
+- Kept equal outer spacing on the left and right
+- Allowed the select elements to shrink inside the Timer Settings card
+- Left the Japanese layout and wording unchanged
