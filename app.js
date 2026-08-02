@@ -9,6 +9,9 @@
   const SHIFT_CHANGE_MS = 30000;
   const MIN_FOCUS_MINUTES = 1;
   const MAX_FOCUS_MINUTES = 120;
+  let hourWheelScrollTimer = null;
+  let minuteWheelScrollTimer = null;
+  let durationWheelIsProgrammatic = false;
 
   const SETTINGS_STORAGE_KEY = "tension-check-timer-settings-v1";
   const TIMER_STORAGE_KEY = "tension-check-timer-state-v1";
@@ -23,8 +26,9 @@
       focusDuration: "集中時間",
       decreaseMinute: "集中時間を1分減らす",
       increaseMinute: "集中時間を1分増やす",
+      hoursUnit: "時間",
       minutesUnit: "分",
-      minuteHelp: "1〜120分で指定できます。休憩は5分固定です。",
+      minuteHelp: "2時間まで分単位で指定できます。休憩は5分固定です。",
       focusEndAlert: "集中終了のアラート音",
       softChime: "やわらかいチャイム",
       bell: "ベル",
@@ -119,6 +123,7 @@
       focusDuration: "Focus Duration",
       decreaseMinute: "Decrease focus duration by one minute",
       increaseMinute: "Increase focus duration by one minute",
+      hoursUnit: "hr",
       minutesUnit: "min",
       minuteHelp: "Choose 1–120 minutes. Breaks are fixed at 5 minutes.",
       focusEndAlert: "Focus-End Alert",
@@ -240,8 +245,8 @@
   const bodyCheckAnswers = document.getElementById("body-check-answers");
   const bodyCheckSkip = document.getElementById("body-check-skip");
 
-  const decreaseButton = document.getElementById("decrease-button");
-  const increaseButton = document.getElementById("increase-button");
+  const focusHourWheel = document.getElementById("focus-hour-wheel");
+  const focusMinuteWheel = document.getElementById("focus-minute-wheel");
   const previewAlertButton = document.getElementById("preview-alert-button");
   const previewFocusButton = document.getElementById("preview-focus-button");
   const startButton = document.getElementById("start-button");
@@ -1214,8 +1219,136 @@
     return Math.min(MAX_FOCUS_MINUTES, Math.max(MIN_FOCUS_MINUTES, number));
   }
 
-  function setFocusMinutes(value) {
-    focusMinutesInput.value = clampFocusMinutes(value);
+  function getDurationWheelItemHeight(wheel) {
+    const firstOption = wheel?.querySelector(".duration-wheel-option");
+
+    if (!firstOption) {
+      return 44;
+    }
+
+    const measuredHeight = firstOption.getBoundingClientRect().height;
+    return measuredHeight > 0 ? measuredHeight : 44;
+  }
+
+  function getDurationParts(totalMinutes) {
+    const clampedMinutes = clampFocusMinutes(totalMinutes);
+
+    return {
+      hours: Math.floor(clampedMinutes / 60),
+      minutes: clampedMinutes % 60
+    };
+  }
+
+  function updateDurationWheelSelection(totalMinutes) {
+    const { hours, minutes } = getDurationParts(totalMinutes);
+
+    for (const option of focusHourWheel.querySelectorAll(".duration-wheel-option")) {
+      const isSelected = Number(option.dataset.value) === hours;
+      option.classList.toggle("is-selected", isSelected);
+      option.setAttribute("aria-selected", String(isSelected));
+    }
+
+    for (const option of focusMinuteWheel.querySelectorAll(".duration-wheel-option")) {
+      const isSelected = Number(option.dataset.value) === minutes;
+      option.classList.toggle("is-selected", isSelected);
+      option.setAttribute("aria-selected", String(isSelected));
+    }
+
+    focusHourWheel.setAttribute(
+      "aria-label",
+      selectedLanguage === "en" ? `Hours: ${hours}` : `時間：${hours}`
+    );
+    focusMinuteWheel.setAttribute(
+      "aria-label",
+      selectedLanguage === "en" ? `Minutes: ${minutes}` : `分：${minutes}`
+    );
+  }
+
+  function scrollDurationWheelTo(wheel, value, behavior = "auto") {
+    durationWheelIsProgrammatic = true;
+    wheel.scrollTo({
+      top: value * getDurationWheelItemHeight(wheel),
+      behavior
+    });
+
+    window.setTimeout(() => {
+      durationWheelIsProgrammatic = false;
+      updateDurationWheelSelection(focusMinutesInput.value);
+    }, behavior === "smooth" ? 320 : 20);
+  }
+
+  function setFocusMinutes(value, shouldScrollWheels = true) {
+    const selectedValue = clampFocusMinutes(value);
+    const { hours, minutes } = getDurationParts(selectedValue);
+    focusMinutesInput.value = selectedValue;
+    updateDurationWheelSelection(selectedValue);
+
+    if (shouldScrollWheels) {
+      scrollDurationWheelTo(focusHourWheel, hours);
+      scrollDurationWheelTo(focusMinuteWheel, minutes);
+    }
+  }
+
+  function createDurationWheelOptions(wheel, minValue, maxValue) {
+    const fragment = document.createDocumentFragment();
+
+    for (let value = minValue; value <= maxValue; value += 1) {
+      const option = document.createElement("div");
+      option.className = "duration-wheel-option";
+      option.dataset.value = String(value);
+      option.setAttribute("role", "option");
+      option.setAttribute("aria-selected", "false");
+      option.textContent = String(value).padStart(2, "0");
+      fragment.appendChild(option);
+    }
+
+    wheel.appendChild(fragment);
+  }
+
+  function initializeDurationWheels() {
+    createDurationWheelOptions(focusHourWheel, 0, 2);
+    createDurationWheelOptions(focusMinuteWheel, 0, 59);
+    setFocusMinutes(25, false);
+
+    window.requestAnimationFrame(() => {
+      setFocusMinutes(25);
+    });
+  }
+
+  function getWheelValue(wheel) {
+    const itemHeight = getDurationWheelItemHeight(wheel);
+    return Math.round(wheel.scrollTop / itemHeight);
+  }
+
+  function selectDurationFromWheels(changedWheel) {
+    if (durationWheelIsProgrammatic) {
+      window.setTimeout(() => {
+        updateDurationWheelSelection(focusMinutesInput.value);
+      }, 0);
+      return;
+    }
+
+    let hours = Math.max(0, Math.min(2, getWheelValue(focusHourWheel)));
+    let minutes = Math.max(0, Math.min(59, getWheelValue(focusMinuteWheel)));
+
+    if (hours === 2 && minutes > 0) {
+      minutes = 0;
+      scrollDurationWheelTo(focusMinuteWheel, 0, "smooth");
+    }
+
+    if (hours === 0 && minutes === 0) {
+      minutes = 1;
+      scrollDurationWheelTo(focusMinuteWheel, 1, "smooth");
+    }
+
+    const totalMinutes = hours * 60 + minutes;
+    setFocusMinutes(totalMinutes, false);
+
+    window.requestAnimationFrame(() => {
+      updateDurationWheelSelection(totalMinutes);
+    });
+
+    saveSettings();
   }
 
   function getTimeParts(totalSeconds) {
@@ -1306,6 +1439,7 @@
     }
 
     updateHistoryCount();
+    updateDurationWheelSelection(focusMinutesInput.value);
 
     if (shouldRefreshDisplay) {
       updateDisplay();
@@ -1367,7 +1501,7 @@
       focusMinutes: clampFocusMinutes(focusMinutesInput.value),
       alertSound: alertSoundSelect.value,
       focusSound: focusSoundSelect.value,
-      breakEndAlert: breakEndAlertCheckbox.checked,
+      breakEndAlert: true,
       theme: selectedTheme,
       language: selectedLanguage
     };
@@ -1401,7 +1535,7 @@
         focusSoundSelect.value = savedFocusSound;
       }
 
-      breakEndAlertCheckbox.checked = settings.breakEndAlert !== false;
+      breakEndAlertCheckbox.checked = true;
       applyTheme(settings.theme ?? "powder-sky");
       applyLanguage(settings.language ?? "ja", false);
     } catch (_) {
@@ -1802,25 +1936,46 @@
   deleteHistoryButton.addEventListener("click", deleteBodyCheckHistory);
   bodyCheckSkip.addEventListener("click", closeBodyCheck);
 
-  decreaseButton.addEventListener("click", () => {
-    setFocusMinutes(clampFocusMinutes(focusMinutesInput.value) - 1);
-    saveSettings();
-  });
+  focusHourWheel.addEventListener("scroll", () => {
+    if (hourWheelScrollTimer !== null) {
+      window.clearTimeout(hourWheelScrollTimer);
+    }
 
-  increaseButton.addEventListener("click", () => {
-    setFocusMinutes(clampFocusMinutes(focusMinutesInput.value) + 1);
-    saveSettings();
-  });
+    hourWheelScrollTimer = window.setTimeout(() => {
+      hourWheelScrollTimer = null;
+      selectDurationFromWheels(focusHourWheel);
+    }, 90);
+  }, { passive: true });
 
-  focusMinutesInput.addEventListener("change", () => {
-    setFocusMinutes(focusMinutesInput.value);
-    saveSettings();
-  });
+  focusMinuteWheel.addEventListener("scroll", () => {
+    if (minuteWheelScrollTimer !== null) {
+      window.clearTimeout(minuteWheelScrollTimer);
+    }
 
-  focusMinutesInput.addEventListener("blur", () => {
-    setFocusMinutes(focusMinutesInput.value);
-    saveSettings();
-  });
+    minuteWheelScrollTimer = window.setTimeout(() => {
+      minuteWheelScrollTimer = null;
+      selectDurationFromWheels(focusMinuteWheel);
+    }, 90);
+  }, { passive: true });
+
+  for (const wheel of [focusHourWheel, focusMinuteWheel]) {
+    wheel.addEventListener("keydown", event => {
+      if (!["ArrowUp", "ArrowDown"].includes(event.key)) {
+        return;
+      }
+
+      event.preventDefault();
+      const direction = event.key === "ArrowUp" ? -1 : 1;
+      const currentValue = getWheelValue(wheel);
+      const maxValue = wheel === focusHourWheel ? 2 : 59;
+      const nextValue = Math.max(0, Math.min(maxValue, currentValue + direction));
+      scrollDurationWheelTo(wheel, nextValue, "smooth");
+
+      window.setTimeout(() => {
+        selectDurationFromWheels(wheel);
+      }, 320);
+    });
+  }
 
   alertSoundSelect.addEventListener("change", async () => {
     saveSettings();
@@ -1832,7 +1987,6 @@
     stopWebAudio();
     saveSettings();
   });
-  breakEndAlertCheckbox.addEventListener("change", saveSettings);
 
   timerCard.addEventListener("click", event => {
     if (event.target.closest("button")) {
@@ -1890,6 +2044,13 @@
     }
   });
 
+  window.addEventListener("resize", () => {
+    window.clearTimeout(window.__durationWheelResizeTimer);
+    window.__durationWheelResizeTimer = window.setTimeout(() => {
+      setFocusMinutes(focusMinutesInput.value);
+    }, 120);
+  });
+
   window.addEventListener("pagehide", saveTimerState);
 
   if ("serviceWorker" in navigator) {
@@ -1901,6 +2062,7 @@
   }
 
   updateWakeLockStatus("wakeUnused");
+  initializeDurationWheels();
   loadSettings();
   updateHistoryCount();
   applyLanguage(selectedLanguage, false);

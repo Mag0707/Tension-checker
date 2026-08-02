@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
   <link rel="apple-touch-icon" href="icons/icon-192.png">
   <title>過緊張チェックタイマー</title>
-  <link rel="stylesheet" href="style.css?v=49">
+  <link rel="stylesheet" href="style.css?v=55">
 </head>
 <body>
   <main class="app-shell">
@@ -53,24 +53,36 @@
 
         <div id="focus-minutes-group">
           <label class="field-label" for="focus-minutes" data-i18n="focusDuration">集中時間</label>
-          <div class="minute-control">
-            <button id="decrease-button" class="step-button" type="button" data-i18n-aria="decreaseMinute" aria-label="集中時間を1分減らす">−</button>
-            <div class="minute-display">
-              <input
-                id="focus-minutes"
-                type="number"
-                min="1"
-                max="120"
-                step="1"
-                value="25"
-                inputmode="numeric"
-                aria-describedby="minute-help"
-              >
-              <span data-i18n="minutesUnit">分</span>
+          <div class="duration-wheel-wrap">
+            <div class="duration-wheel-column">
+              <div class="duration-wheel-frame">
+                <div
+                  id="focus-hour-wheel"
+                  class="duration-wheel"
+                  role="listbox"
+                  tabindex="0"
+                  aria-label="時間"
+                  aria-describedby="minute-help"
+                ></div>
+              </div>
+              <span class="duration-wheel-unit" data-i18n="hoursUnit">時間</span>
             </div>
-            <button id="increase-button" class="step-button" type="button" data-i18n-aria="increaseMinute" aria-label="集中時間を1分増やす">＋</button>
+            <div class="duration-wheel-column">
+              <div class="duration-wheel-frame">
+                <div
+                  id="focus-minute-wheel"
+                  class="duration-wheel"
+                  role="listbox"
+                  tabindex="0"
+                  aria-label="分"
+                  aria-describedby="minute-help"
+                ></div>
+              </div>
+              <span class="duration-wheel-unit" data-i18n="minutesUnit">分</span>
+            </div>
+            <input id="focus-minutes" type="hidden" value="25">
           </div>
-          <p id="minute-help" class="help-text" data-i18n="minuteHelp">1〜120分で指定できます。休憩は5分固定です。</p>
+          <p id="minute-help" class="help-text" data-i18n="minuteHelp">2時間まで分単位で指定できます。休憩は5分固定です。</p>
         </div>
 
         <div class="setting-group">
@@ -85,14 +97,7 @@
           </div>
           <p class="help-text" data-i18n="alertHelp">集中終了時に約2秒だけ鳴ります。</p>
 
-          <label class="toggle-row" for="break-end-alert">
-            <span class="toggle-text">
-              <strong data-i18n="breakEndSameSound">休憩終了時にも同じ音を鳴らす</strong>
-              <small data-i18n="breakEndHelp">約2秒鳴った後、次の集中時間を始めます。</small>
-            </span>
-            <input id="break-end-alert" type="checkbox" checked>
-            <span class="toggle-switch" aria-hidden="true"></span>
-          </label>
+          <input id="break-end-alert" type="checkbox" checked hidden>
         </div>
 
         <div class="setting-group">
@@ -256,6 +261,6 @@
     </section>
   </div>
 
-  <script src="app.js?v=49"></script>
+  <script src="app.js?v=55"></script>
 </body>
 </html>

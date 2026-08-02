@@ -407,3 +407,125 @@ Version 41 updates the timer screen design as follows.
 - Matched the timer card's bottom padding to its top padding
 - Used the freed vertical space to align timer controls with the setup Start button
 - Ring, typography, card width, and button sizes remain unchanged
+
+
+## 第50版：集中時間ホイールと休憩終了アラート固定
+
+- 集中時間の手入力と「＋／−」操作を廃止
+- 1〜120分を上下スワイプで選ぶ、常設の回転式ホイールへ変更
+- 中央の数字が現在の選択値になり、指を離すと1分単位で吸着
+- 追加のタップ操作や別画面は不要
+- キーボード利用時は上下矢印でも変更可能
+- 「休憩終了時にも同じ音を鳴らす」の表示を設定画面から削除
+- 休憩終了アラートは常にオンとして固定
+- ホイールは削除した設定項目のスペースを利用し、設定カード全体の縦幅を大きく変えない構成
+
+---
+
+## Version 50: Focus Duration Wheel and Fixed Break-End Alert
+
+- Replaced manual input and plus/minus controls with an always-visible vertical wheel
+- Supports 1–120 minutes with one-minute scroll snapping
+- The centered value is the selected duration
+- No extra modal or confirmation tap is required
+- Removed the break-end alert toggle from the setup screen
+- Break-end alert is now always enabled
+- Used the freed space to keep the overall setup layout close to its existing height
+
+
+## 第51版：時間・分の2ホイール
+
+- 集中時間を「時間」と「分」の2つの縦ホイールに分割
+- 0時間1分〜2時間0分の範囲で設定
+- 1時間の場合は「1時間 0分」として設定可能
+- 2時間を選んだ場合は分を自動的に0分へ補正
+- 0時間0分は無効とし、自動的に0時間1分へ補正
+- 初期値は0時間25分
+- 中央の選択値を濃い文字色・太字・大きめ表示へ変更
+- 選択帯を文字の背面に配置し、数字が薄く見える問題を修正
+
+---
+
+## Version 51: Separate Hour and Minute Wheels
+
+- Split focus duration into separate hour and minute wheels
+- Supports 0 hr 1 min through 2 hr 0 min
+- Allows settings such as 1 hr 0 min
+- Automatically forces minutes to 0 when 2 hours is selected
+- Prevents 0 hr 0 min by correcting it to 0 hr 1 min
+- Default value is 0 hr 25 min
+- Made the selected center values darker, bolder, and larger
+- Moved the selection highlight behind the numbers for better contrast
+
+
+## 第52版：分ホイールの選択強調と説明文調整
+
+- 分ホイールの中央選択値にも、時間ホイールと同じ濃い文字色・太字・大きさを明示的に適用
+- `is-selected` と `aria-selected="true"` の両方を使い、iPhoneでスクロール後も選択状態が外れにくいよう修正
+- プログラムによるホイール移動後にも、時間・分の両方の選択表示を再同期
+- 説明文を「2時間まで分単位で指定できます。休憩は5分固定です。」へ変更
+
+---
+
+## Version 52: Minute Wheel Highlight and Help Text
+
+- Applied the same dark, bold, large selected style to the minute wheel
+- Used both selected classes and ARIA state for more reliable iPhone rendering
+- Re-synchronized both wheel highlights after programmatic scrolling
+- Shortened the duration help text
+
+
+## 第53版：分ホイールの1分ずれ修正
+
+- iPhone用CSSではホイール1行の高さが38px、JavaScriptでは44px固定で計算していた不一致を修正
+- 実際に表示されている行の高さを毎回測定して、選択値とスクロール位置を計算
+- 5分を選んだ際に4分として強調・保存される問題を修正
+- 初回表示後と画面サイズ変更後にも、現在値を中央へ再配置
+
+---
+
+## Version 53: Fixed One-Minute Wheel Offset
+
+- Removed the mismatch between the 38px iPhone row height and the previous fixed 44px JavaScript calculation
+- Measures the actual rendered option height for scrolling and value selection
+- Fixes the issue where selecting 5 minutes highlighted and saved 4 minutes
+- Re-centers the selected values after initial layout and screen-size changes
+
+
+## 第54版：集中時間ホイールの枠構成を整理
+
+- 数字部分だけを枠で囲む構成へ変更
+- 「時間」「分」は各数字枠の外側へ配置
+- 時間側・分側の数字枠の横幅を統一
+- 選択中の網掛けを削除
+- 選択帯の上下罫線も削除
+- 中央の選択値は濃い色・太字のまま維持
+
+---
+
+## Version 54: Refined Duration Wheel Frames
+
+- Framed only the numeric wheel areas
+- Moved hour and minute labels outside the frames
+- Matched the width of the hour and minute numeric frames
+- Removed the selected-row shading
+- Removed the selection band's horizontal rules
+- Kept the centered selected values dark and bold
+
+
+## 第55版：集中時間枠線とプルダウン矢印
+
+- 集中時間の時間・分ホイールの外枠線を削除
+- ホイールの配置と中央の選択表示は維持
+- 集中終了のアラート音と集中中の音のプルダウンへSVG矢印を再表示
+- 矢印を各プルダウン枠内の右端へ固定
+- iPhoneの標準矢印表示差を避けるため独自SVGを強制適用
+
+---
+
+## Version 55: Wheel Border and Select Arrow Fixes
+
+- Removed the border around the hour and minute wheel frames
+- Kept the wheel layout and centered selected values
+- Restored SVG arrows for both sound selects
+- Fixed the arrows inside the right edge of each select
