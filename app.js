@@ -1541,7 +1541,6 @@
   function showTimerScreen() {
     setupScreen.classList.add("hidden");
     timerScreen.classList.remove("hidden");
-    document.body.classList.add("timer-active");
     startMessageRotation();
     startShiftRotation();
   }
@@ -1550,7 +1549,6 @@
     resetScreenProtectionMode();
     timerScreen.classList.add("hidden");
     setupScreen.classList.remove("hidden");
-    document.body.classList.remove("timer-active");
   }
 
   function showRunningControls() {

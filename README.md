@@ -313,20 +313,16 @@ Version 41 updates the timer screen design as follows.
 - Pending replay timers are cleared on reset or interruption
 
 
-## 第44版：PWAタイマー画面の高さ調整
+## 第45版：第43版基準・一時停止中ボタン横並び
 
-- 画面上部の英字「TENSION CHECK TIMER」を削除
-- iPhoneのPWA表示中だけ、タイマー画面を高さに合わせてコンパクト化
-- タイトル、説明文、リング、カード内余白、状態表示を縮小
-- 一時停止中も「スタート」「リセット」の両方が一画面内に収まるよう、操作ボタンの高さと間隔を調整
-- 設定画面のサイズには影響しないよう、タイマー表示中のみ専用クラスを適用
+- 第44版の画面全体の縮小調整を取り消し、第43版を基準に戻しました
+- タイマー、リング、文字、余白、カード、ボタンのサイズ感は第43版のままです
+- 一時停止中に表示される「スタート」「リセット」ボタンだけを横並びに変更しました
 
 ---
 
-## Version 44: PWA Timer Screen Fit
+## Version 45: Based on Version 43 with Horizontal Paused Controls
 
-- Removed the upper “TENSION CHECK TIMER” eyebrow
-- Added a compact layout used only while the timer screen is open on iPhone-sized PWA displays
-- Reduced header, ring, card spacing, status text, and control sizes
-- Adjusted paused controls so both Start and Reset fit within one screen
-- The setup screen retains its existing layout
+- Reverted the layout changes from version 44 and restored version 43 as the base
+- Timer, ring, typography, spacing, card, and button sizing remain unchanged from version 43
+- Only the paused Start and Reset buttons are displayed side by side
